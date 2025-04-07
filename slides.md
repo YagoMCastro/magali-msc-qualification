@@ -26,9 +26,9 @@ The reveal.js configuration can be found in index.html
 <div class="col-large">
 
 <i class="fa fa-calendar-alt" style="margin: 0 10px 0 0"></i>
-12 September 2024
+??????5 April 2024
 <span style="margin: 0 20px"></span>
-Science Day 2024 | IAG
+Master's Degree Qualification Exam | IAG
 
 <!-- Permission to reuse and CC-BY license logo -->
 <i class="fa fa-camera" style="margin: 0 10px 0 0"></i>
@@ -117,6 +117,11 @@ Souza-Junior (2024)
 # Needs
 <div class="fragment">
 
+- Algorithms for **automatic detection** of magnetic **grains** and its **magnetic moment** determination
+
+</div>
+<div class="fragment">
+
 - **Open software** for forward **modelling** and **inversion** techniques specific to magnetic microscopy 
 
 </div>
@@ -126,15 +131,9 @@ Souza-Junior (2024)
 - **Data conventions**  
 
 </div>
-<div class="fragment">
-
-- Algorithms for **automatic detection** of magnetic **grains** and its **magnetic moment** determination
-
-</div>
-
-
 
 ===============================================================================
+
 
 <!-- .slide: data-background-opacity="1" data-background-image="assets/readme-banner.png"  data-background-size="contain" data-background-color="#262626" -->
 
@@ -213,6 +212,29 @@ Modelling and processing magnetic microscopy data
 
 ===============================================================================
 
+# How?
+
+
+===============================================================================
+
+# Needs
+
+- Algorithms for **automatic detection** of magnetic **grains** and its **magnetic moment** determination
+
+
+===============================================================================
+
+# Gelsons first paper overview
+
+===============================================================================
+
+<h1>Objective</h1>
+<ul>
+  <li>Apply <strong>Euler Deconvolution</strong> using a least-squares solution to the linearized Euler equation, to estimate source locations of magnetic anomalies </li>
+</ul>
+
+===============================================================================
+
 <!-- .slide: data-background-opacity="1" data-background-image="assets/issue-1.png"  data-background-size="contain" data-background-color="#262626" -->
 
 ===============================================================================
@@ -268,6 +290,12 @@ Modelling and processing magnetic microscopy data
 <img src="assets/stereogram-magali.png">
 
 </div>
+
+===============================================================================
+
+
+
+
 
 ===============================================================================
 

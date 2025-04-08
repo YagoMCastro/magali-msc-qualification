@@ -228,10 +228,165 @@ Modelling and processing magnetic microscopy data
 
 ===============================================================================
 
-<h1>Objective</h1>
+# Step 2: Position Estimation
+
+
+
+- **Goal:** Estimate 3D location of magnetic particles.
+- **Method:** Euler Deconvolution (ED)
 <ul>
-  <li>Apply <strong>Euler Deconvolution</strong> using a least-squares solution to the linearized Euler equation, to estimate source locations of magnetic anomalies </li>
+  <li class="fragment">Assumes dipolar source model</li>
+  <li class="fragment">Applied to each segmented data region</li>
+  <li class="fragment">Yields source position estimate</li>
 </ul>
+
+===============================================================================
+
+ <h1>What is Euler Deconvolution?</h1>
+
+<div class="fragment">
+
+- A method to estimate the location and depth of magnetic sources from total field data.</p>
+
+</div>
+
+===============================================================================
+
+<h1>The Idea Behind It</h1>
+<ul>
+  <li class="fragment">Uses spatial gradients of the magnetic field</li>
+  <li class="fragment">Assumes simple source geometry</li>
+  <li class="fragment">Based on Euler’s homogeneity equation</li>
+</ul>
+
+===============================================================================
+
+# Euler's Homogeneity Equation
+  
+  $$(x - x₀) \frac{\delta T}{\delta x} + (y - y₀) \frac{\delta T}{\delta y} + (z - z₀) \frac{\delta T}{\delta x} = (b - T)\eta$$
+
+
+<div class="text-left">
+
+- $T$ : Total field anomaly in (x,y,z)
+- $b$ : Background field
+- $\eta$ : Structural index
+</div>
+Thompson (1982)
+
+
+===============================================================================
+
+### Structural index for magnetic (M) and gravity (G) sources of different source geometries.
+
+| Source                     | Smellie model     | SI (M) | SI (G) |
+|----------------------------|-------------------|--------|--------|
+| Sphere                 | Dipole            | 3      | 2      |
+| Vertical line end (pipe)  | Pole              | 2      | 1      |
+| Horizontal line (cylinder) | Line of dipoles  | 2      | 0      |
+| Thin bed fault         | Line of dipoles   | 2      | 2      |
+| Thin sheet edge            | Line of poles     | 1      | 0      |
+| Finite contact/fault   | —                 | 0  | −1     |
+| Infinite contact/fault     | —                 | 0      | ∞  |
+
+[Reid & Thurston (2014)](https://library.seg.org/doi/10.1190/geo2013-0235.1)
+
+===============================================================================
+
+# Euler's Homogeneity Equation
+  
+  $$(x - x_c) \frac{\delta T}{\delta x} + (y - y_c) \frac{\delta T}{\delta y} + (z - z_c) \frac{\delta T}{\delta x} = (b - T)\eta$$
+
+
+<div class="text-left">
+
+- $T$ : Total field anomaly in (x,y,z)
+- $b$ : Background field
+- $\eta$ : Structural index
+</div>
+Thompson (1982)
+
+
+===============================================================================
+# Euler's Homogeneity Equation
+  
+$$
+(x - x_c)\partial_x f + (y - y_c)\partial_y f + (z - z_c)\partial_z f = (b - f)\eta
+$$ 
+<div class="text-left">
+
+- $T$ : Total field anomaly
+- $b$ : Background field
+- $\eta$ : Structural index
+</div>
+
+
+===============================================================================
+
+# Euler's Homogeneity Equation
+  
+$$
+(x - x_c)\partial_x f + (y - y_c)\partial_y f + (z - z_c)\partial_z f = (b - f)\eta
+$$ 
+
+
+
+===============================================================================
+
+# Euler's Homogeneity Equation
+  
+$$
+x_c \, \partial_x f + y_c \, \partial_y f + z_c \, \partial_z f + \eta b = x \, \partial_x f + y \, \partial_y f + z \, \partial_z f + \eta f
+$$
+
+
+===============================================================================
+
+# Euler's Homogeneity Equation
+
+<p>
+  \[
+  \begin{bmatrix}
+  \partial_x f_1 & \partial_y f_1 & \partial_z f_1 & \eta \\
+  \partial_x f_2 & \partial_y f_2 & \partial_z f_2 & \eta \\
+  \vdots & \vdots & \vdots & \vdots \\
+  \partial_x f_N & \partial_y f_N & \partial_z f_N & \eta
+  \end{bmatrix}
+  \begin{bmatrix}
+  x_c \\ y_c \\ z_c \\ b
+  \end{bmatrix}
+  =
+  \begin{bmatrix}
+  x_1 \partial_x f_1 + y_1 \partial_y f_1 + z_1 \partial_z f_1 + \eta f_1 \\
+  x_2 \partial_x f_2 + y_2 \partial_y f_2 + z_2 \partial_z f_2 + \eta f_2 \\
+  \vdots \\
+  x_N \partial_x f_N + y_N \partial_y f_N + z_N \partial_z f_N + \eta f_N
+  \end{bmatrix}
+  \]
+</p>
+
+<div class="fragment">
+
+$$\bold{Gp=h}$$
+
+</div>
+
+===============================================================================
+
+# Euler's Homogeneity Equation
+  
+## Matrix form:
+$$
+Gp = h \quad\Rightarrow\quad \hat{p} = (G^T G)^{-1} G^T h
+$$ 
+
+<div class="text-left">
+Estimated parameters:  
+
+<li> $ (x_c, y_c, z_c) \rightarrow  dipole\text{ }position  $
+<li> $ (b) → base\text{ }level$
+
+</div>
 
 ===============================================================================
 

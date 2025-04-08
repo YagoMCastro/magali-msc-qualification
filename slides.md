@@ -224,7 +224,8 @@ Modelling and processing magnetic microscopy data
 
 ===============================================================================
 
-# Gelsons first paper overview
+<!-- .slide: data-background-opacity="1" data-background-image="assets/souza-jr-1.png"  data-background-size="contain" data-background-color="#262626" -->
+
 
 ===============================================================================
 
@@ -272,8 +273,10 @@ Modelling and processing magnetic microscopy data
 - $b$ : Background field
 - $\eta$ : Structural index
 </div>
-Thompson (1982)
+<div class="footnote-center">
 
+  [Thompson (1982)](https://chooser.crossref.org/?doi=10.1190%2F1.1441278)
+</div>
 
 ===============================================================================
 
@@ -289,7 +292,11 @@ Thompson (1982)
 | Finite contact/fault   | —                 | 0  | −1     |
 | Infinite contact/fault     | —                 | 0      | ∞  |
 
+
+<div class="footnote-center">
+
 [Reid & Thurston (2014)](https://library.seg.org/doi/10.1190/geo2013-0235.1)
+</div>
 
 ===============================================================================
 
@@ -304,8 +311,11 @@ Thompson (1982)
 - $b$ : Background field
 - $\eta$ : Structural index
 </div>
-Thompson (1982)
 
+<div class="footnote-center">
+
+  [Thompson (1982)](https://chooser.crossref.org/?doi=10.1190%2F1.1441278)
+</div>
 
 ===============================================================================
 # Euler's Homogeneity Equation
@@ -319,7 +329,10 @@ $$
 - $b$ : Background field
 - $\eta$ : Structural index
 </div>
+<div class="footnote-center">
 
+[Souza-Junior et al 2024](https://agupubs.onlinelibrary.wiley.com/doi/10.1029/2023GC011082)
+</div>
 
 ===============================================================================
 
@@ -329,7 +342,10 @@ $$
 (x - x_c)\partial_x f + (y - y_c)\partial_y f + (z - z_c)\partial_z f = (b - f)\eta
 $$ 
 
+<div class="footnote-center">
 
+[Souza-Junior et al 2024](https://agupubs.onlinelibrary.wiley.com/doi/10.1029/2023GC011082)
+</div>
 
 ===============================================================================
 
@@ -338,6 +354,11 @@ $$
 $$
 x_c \, \partial_x f + y_c \, \partial_y f + z_c \, \partial_z f + \eta b = x \, \partial_x f + y \, \partial_y f + z \, \partial_z f + \eta f
 $$
+
+<div class="footnote-center">
+
+[Souza-Junior et al 2024](https://agupubs.onlinelibrary.wiley.com/doi/10.1029/2023GC011082)
+</div>
 
 
 ===============================================================================
@@ -370,22 +391,57 @@ $$
 $$\bold{Gp=h}$$
 
 </div>
+<div class="footnote-center">
+
+[Souza-Junior et al 2024](https://agupubs.onlinelibrary.wiley.com/doi/10.1029/2023GC011082)
+</div>
+
+===============================================================================
+<!-- .slide: class="slide-transition" -->
+
+
+# Assuming that errors in the spatial derivatives of $f$ are negligible
+
+===============================================================================
+# Least-Squares misfit ($\phi (p)$)
+
+$$
+\phi(\mathbf{p}) = \lVert \mathbf{h}^o - \mathbf{h} \rVert^2 = (\mathbf{h}^o - \mathbf{G} \mathbf{p})^T (\mathbf{h}^o - \mathbf{G} \mathbf{p})
+$$
+
+<div class="text-left">
+
+- $h^o$ : Pseudo-observation vector
+- $h$ : Predictions
+- $p$ : Solution vectorss
+</div>
+<div class="footnote-center">
+
+[Souza-Junior et al 2024](https://agupubs.onlinelibrary.wiley.com/doi/10.1029/2023GC011082)
+</div>
+
 
 ===============================================================================
 
-# Euler's Homogeneity Equation
-  
-## Matrix form:
+# Least-Squares misfit ($\phi (p)$)
+
 $$
-Gp = h \quad\Rightarrow\quad \hat{p} = (G^T G)^{-1} G^T h
-$$ 
+\mathbf{G}^T \mathbf{G} \mathbf{p} = \mathbf{G}^T \mathbf{h}^o
+$$
 
 <div class="text-left">
-Estimated parameters:  
 
-<li> $ (x_c, y_c, z_c) \rightarrow  dipole\text{ }position  $
-<li> $ (b) → base\text{ }level$
+- $h^o$ : Pseudo-observation vector
+- $h$ : Predictions
+- $p$ : Solution vector (estimates positions and base level for the source)
+</div>
+<div class="fragment">
 
+**The method is applied to all the previously detected windows**
+</div>
+<div class="footnote-center">
+
+[Souza-Junior et al 2024](https://agupubs.onlinelibrary.wiley.com/doi/10.1029/2023GC011082)
 </div>
 
 ===============================================================================

@@ -226,12 +226,56 @@ Modelling and processing magnetic microscopy data
 
 <!-- .slide: data-background-opacity="1" data-background-image="assets/souza-jr-1.png"  data-background-size="contain" data-background-color="#262626" -->
 
+===============================================================================
+
+## Step 1: Automatic Source Detection and Separation
+- **Goal:** isolate each magnetic particle in the image  
+- **Methods used:**
+<ul>
+<li class='fragment'> <b>Total Gradient Amplitude (TGA):</b>  
+  Enhances signal near the source (high-pass filter)</li>  
+<li class='fragment'> <b>Contrast stretching:</b>  
+  Uses percentiles (1st and 99th) to enhance weak particles</li>  
+<li class='fragment'> <b>LoG (Laplacian of Gaussian) segmentation:</b>
+  Detects “blobs” → 1 window = 1 particle </li> 
+<li class='fragment'> Windows at borders are discarded</li>
+</ul>
+
+===============================================================================
+
+# What is TGA?
+
+
+Given a magnetic field $f(x, y, z)$:
+$$
+\left\| \vec{\nabla} f(x, y, z) \right\| = \sqrt{ \left( \partial_x f \right)^2 + \left( \partial_y f \right)^2 + \left( \partial_z f \right)^2 },
+$$
+
+===============================================================================
+
+# Computing the Derivatives
+<ul>
+  <li>Use <strong>second-order central finite differences</strong> for spatial derivatives:</li>
+</ul>
+$$\Delta_xf(x, y, z) ≈ \frac{f(x + \Delta_{x,y,z}) - f(x - \Delta_{x,y,z})}{2\Delta_{x}}$$
+<ul>
+  <li>For ∂z: apply <strong>upward and downward continuation</strong> in the wavenumber domain.</li>
+</ul>
+
+===============================================================================
+
+# Advantages of TGA
+<ul>
+  <li class="text-left fragment">Always positive</li>
+  <li class="text-left fragment">Peaks directly over magnetic sources</li>
+  <li class="text-left fragment">Less sensitive to magnetization direction</li>
+  <li class="text-left fragment">Enhances local features, suppresses regional background</li>
+  <li class="text-left fragment">Acts as a <b>high-pass filter</b>, removing long-wavelength noise.</li>
+</ul>
 
 ===============================================================================
 
 # Step 2: Position Estimation
-
-
 
 - **Goal:** Estimate 3D location of magnetic particles.
 - **Method:** Euler Deconvolution (ED)

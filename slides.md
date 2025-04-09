@@ -321,20 +321,22 @@ $$\Delta_xf(x, y, z) ≈ \frac{f(x + \Delta_{x,y,z}) - f(x - \Delta_{x,y,z})}{2\
 
 ===============================================================================
 
+===============================================================================
 # Euler's Homogeneity Equation
   
-  $$(x - x₀) \frac{\delta T}{\delta x} + (y - y₀) \frac{\delta T}{\delta y} + (z - z₀) \frac{\delta T}{\delta x} = (b - T)\eta$$
-
-
+$$
+(x - x_c)\partial_x f + (y - y_c)\partial_y f + (z - z_c)\partial_z f = (b - f)\eta
+$$ 
 <div class="text-left">
 
-- $T$ : Total field anomaly in (x,y,z)
-- $b$ : Background field
-- $\eta$ : Structural index
+- $x_c,y_c,z_c$ : coordinates of the magnetic field source
+- $f$ : any function (Ex.: bz)
+- $b$ : base level (constant shift in the signal)
+- $\eta$ : structural index
 </div>
 <div class="footnote-center">
 
-  [Thompson (1982)](https://chooser.crossref.org/?doi=10.1190%2F1.1441278)
+[Souza-Junior et al 2024](https://agupubs.onlinelibrary.wiley.com/doi/10.1029/2023GC011082)
 </div>
 
 ===============================================================================
@@ -357,41 +359,8 @@ $$\Delta_xf(x, y, z) ≈ \frac{f(x + \Delta_{x,y,z}) - f(x - \Delta_{x,y,z})}{2\
 [Reid & Thurston (2014)](https://library.seg.org/doi/10.1190/geo2013-0235.1)
 </div>
 
-===============================================================================
-
-# Euler's Homogeneity Equation
-  
-  $$(x - x_c) \frac{\delta T}{\delta x} + (y - y_c) \frac{\delta T}{\delta y} + (z - z_c) \frac{\delta T}{\delta x} = (b - T)\eta$$
 
 
-<div class="text-left">
-
-- $T$ : Total field anomaly in (x,y,z)
-- $b$ : Background field
-- $\eta$ : Structural index
-</div>
-
-<div class="footnote-center">
-
-  [Thompson (1982)](https://chooser.crossref.org/?doi=10.1190%2F1.1441278)
-</div>
-
-===============================================================================
-# Euler's Homogeneity Equation
-  
-$$
-(x - x_c)\partial_x f + (y - y_c)\partial_y f + (z - z_c)\partial_z f = (b - f)\eta
-$$ 
-<div class="text-left">
-
-- $T$ : Total field anomaly
-- $b$ : Background field
-- $\eta$ : Structural index
-</div>
-<div class="footnote-center">
-
-[Souza-Junior et al 2024](https://agupubs.onlinelibrary.wiley.com/doi/10.1029/2023GC011082)
-</div>
 
 ===============================================================================
 
@@ -400,7 +369,14 @@ $$
 $$
 (x - x_c)\partial_x f + (y - y_c)\partial_y f + (z - z_c)\partial_z f = (b - f)\eta
 $$ 
+<p class="fragment"> Rearranging into a pseudo‐parametric model with parameters $x_c, y_c, z_c,
+b$</p>
+<div class="fragment">
 
+$$
+x_c \ \partial_x f + y_c \\partial_y f + z_c \ \partial_z f + \eta b = x \ \partial_x f + y \ \partial_y f + z \ \partial_z f + \eta f
+$$
+</div>
 <div class="footnote-center">
 
 [Souza-Junior et al 2024](https://agupubs.onlinelibrary.wiley.com/doi/10.1029/2023GC011082)
@@ -411,7 +387,7 @@ $$
 # Euler's Homogeneity Equation
   
 $$
-x_c \, \partial_x f + y_c \, \partial_y f + z_c \, \partial_z f + \eta b = x \, \partial_x f + y \, \partial_y f + z \, \partial_z f + \eta f
+x_c \ \partial_x f + y_c \\partial_y f + z_c \ \partial_z f + \eta b = x \ \partial_x f + y \ \partial_y f + z \ \partial_z f + \eta f
 $$
 
 <div class="footnote-center">
@@ -423,25 +399,35 @@ $$
 ===============================================================================
 
 # Euler's Homogeneity Equation
+$$
+x_c \ \partial_x f + y_c \\partial_y f + z_c \ \partial_z f + \eta b = x \ \partial_x f + y \ \partial_y f + z \ \partial_z f + \eta f
+$$
 
-<p>
+<p class="fragment"> Applying to each data point, a $N \times 4$ linear system of equations can be formed</p>
+<p class="fragment">
   \[
+  \underbrace{
   \begin{bmatrix}
   \partial_x f_1 & \partial_y f_1 & \partial_z f_1 & \eta \\
   \partial_x f_2 & \partial_y f_2 & \partial_z f_2 & \eta \\
   \vdots & \vdots & \vdots & \vdots \\
   \partial_x f_N & \partial_y f_N & \partial_z f_N & \eta
   \end{bmatrix}
+  }_{\text{Jacobian matrix}}
+  \underbrace{
   \begin{bmatrix}
   x_c \\ y_c \\ z_c \\ b
   \end{bmatrix}
+  }_{\text{Model parameters}}
   =
+  \underbrace{
   \begin{bmatrix}
   x_1 \partial_x f_1 + y_1 \partial_y f_1 + z_1 \partial_z f_1 + \eta f_1 \\
   x_2 \partial_x f_2 + y_2 \partial_y f_2 + z_2 \partial_z f_2 + \eta f_2 \\
   \vdots \\
   x_N \partial_x f_N + y_N \partial_y f_N + z_N \partial_z f_N + \eta f_N
   \end{bmatrix}
+  }_{\text{Data vector}}
   \]
 </p>
 

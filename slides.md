@@ -53,16 +53,31 @@ Feel free to screenshot/share/reuse this presentation
 
 ===============================================================================
 
-# Paleomagnetism
+# What is Paleomagnetism?
 
+- The study of Earth’s magnetic field as <b>recorded</b> in rocks and sediments over <b>geological time</b>.
+
+===============================================================================
+# How magnetic minerals are formed?
+<ul>
+  <li><b>Thermoremanent Magnetization (TRM): </b>igneous rocks record Earth’s magnetic field as they cool below the Curie point</li>
+  <li><b>Depositional Remanent Magnetization (DRM):</b> magnetic particles in sediments align with Earth’s field during deposition in aquatic environments</li>
+</ul>
 
 ===============================================================================
 
+# Why is paleomagnetism important?
 
-  <img src="assets/geomag.svg" style="width: 50%" >
+<ul>
+<li class="fragment"><b>Geomagnetic reversals:</b> shows that Earth's magnetic field has flipped many times throughout its history</li>
+<li class="fragment"><b>Continental drift and plate tectonics:</b> helped confirm the theory of continental drift and reconstruct past positions of the continents</li>
+<li class="fragment"><b>Geological dating:</b> used as a relative dating tool by comparing rock records with the known magnetic reversal timescale (magnetostratigraphy)</li>
+<li class="fragment"><b>Paleofield reconstruction:</b> allows us to understand how Earth’s magnetic field has evolved over hundreds of millions of years</li>
+</ul>
 
+===============================================================================
 
-
+<img src="assets/geomag.svg" style="width: 50%" >
 
 ===============================================================================
 

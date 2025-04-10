@@ -319,7 +319,6 @@ $$\Delta_xf(x, y, z) ≈ \frac{f(x + \Delta_{x,y,z}) - f(x - \Delta_{x,y,z})}{2\
   <li class="fragment">Based on Euler’s homogeneity equation</li>
 </ul>
 
-===============================================================================
 
 ===============================================================================
 # Euler's Homogeneity Equation
@@ -385,20 +384,6 @@ $$
 ===============================================================================
 
 # Euler's Homogeneity Equation
-  
-$$
-x_c \ \partial_x f + y_c \\partial_y f + z_c \ \partial_z f + \eta b = x \ \partial_x f + y \ \partial_y f + z \ \partial_z f + \eta f
-$$
-
-<div class="footnote-center">
-
-[Souza-Junior et al 2024](https://agupubs.onlinelibrary.wiley.com/doi/10.1029/2023GC011082)
-</div>
-
-
-===============================================================================
-
-# Euler's Homogeneity Equation
 $$
 x_c \ \partial_x f + y_c \\partial_y f + z_c \ \partial_z f + \eta b = x \ \partial_x f + y \ \partial_y f + z \ \partial_z f + \eta f
 $$
@@ -448,46 +433,75 @@ $$\bold{Gp=h}$$
 # Assuming that errors in the spatial derivatives of $f$ are negligible
 
 ===============================================================================
-# Least-Squares misfit ($\phi (p)$)
+
+#  Leats-squares solution
+
+<p class="text-left">We want to solve:</p>
 
 $$
-\phi(\mathbf{p}) = \lVert \mathbf{h}^o - \mathbf{h} \rVert^2 = (\mathbf{h}^o - \mathbf{G} \mathbf{p})^T (\mathbf{h}^o - \mathbf{G} \mathbf{p})
+\mathbf{G} \mathbf{p} = \mathbf{h}
 $$
 
-<div class="text-left">
+<div  class= " text-left fragment">
+<p class="text-left">When the system is <b>overdetermined</b> (more equations than unknowns), we seek a <b>least-squares solution</b>:</p>
 
-- $h^o$ : Pseudo-observation vector
-- $h$ : Predictions
-- $p$ : Solution vectorss
-</div>
-<div class="footnote-center">
+$$
+\min \Phi (\mathbf{p}) =||\mathbf{h^o} - \mathbf{h}\||^2
+$$
 
-[Souza-Junior et al 2024](https://agupubs.onlinelibrary.wiley.com/doi/10.1029/2023GC011082)
+<ul>
+  <li>$\Phi (\mathbf{p})$ : objective function</li>
+  <li>$\mathbf{h^o}$ : observed data</li>
+</ul>
 </div>
 
 
 ===============================================================================
 
-# Least-Squares misfit ($\phi (p)$)
+## Residual Vector
+
+<p class="text-left">Define the <b>residual</b>:</p>
 
 $$
-\mathbf{G}^T \mathbf{G} \mathbf{p} = \mathbf{G}^T \mathbf{h}^o
+\mathbf{r} = \mathbf{h^o} - \mathbf{h}
 $$
 
-<div class="text-left">
+<p class="text-left">Objective function to be minimized:</p>
 
-- $h^o$ : Pseudo-observation vector
-- $h$ : Predictions
-- $p$ : Solution vector (estimates positions and base level for the source)
-</div>
-<div class="fragment">
+$$
+\Phi(\mathbf{p}) = \|\mathbf{r}\|^2
+$$
 
-**The method is applied to all the previously detected windows**
-</div>
-<div class="footnote-center">
+===============================================================================
 
-[Souza-Junior et al 2024](https://agupubs.onlinelibrary.wiley.com/doi/10.1029/2023GC011082)
-</div>
+# To solve it
+<ol>
+  <li>
+    <strong>Expand the expression:</strong><br>
+    \[
+    \Phi(\mathbf{p}) = (\mathbf{h}^o - \mathbf{G}\mathbf{p})^\top (\mathbf{h}^o - \mathbf{G}\mathbf{p}) = \mathbf{h}^{o\top}\mathbf{h}^o - 2\mathbf{p}^\top \mathbf{G}^\top \mathbf{h}^o + \mathbf{p}^\top \mathbf{G}^\top \mathbf{G} \mathbf{p}
+    \]
+  </li>
+  <li>
+    <strong>Take the gradient with respect to \(\mathbf{p}\) and set to zero:</strong><br>
+    \[
+      \nabla_{\mathbf{p}} \Phi(\mathbf{p}) = -2 \mathbf{G}^\top \mathbf{h}^o + 2 \mathbf{G}^\top \mathbf{G} \mathbf{p}=\mathbf{0}
+    \]
+    \[
+      \boxed{
+      \mathbf{G}^\top \mathbf{G} \mathbf{p} = \mathbf{G}^\top \mathbf{h}^o
+      }
+    \]
+  </li>
+  <li>
+    <strong>Solve the normal equations:</strong><br>
+    \[
+      \boxed{
+      \mathbf{p} = (\mathbf{G}^\top \mathbf{G})^{-1} \mathbf{G}^\top \mathbf{h}^o
+      }
+    \]
+  </li>
+</ol>
 
 ===============================================================================
 

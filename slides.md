@@ -26,7 +26,7 @@ The reveal.js configuration can be found in index.html
 <div class="col-large">
 
 <i class="fa fa-calendar-alt" style="margin: 0 10px 0 0"></i>
-??????5 April 2024
+15 April 2022
 <span style="margin: 0 20px"></span>
 Master's Degree Qualification Exam | IAG
 
@@ -55,7 +55,7 @@ Feel free to screenshot/share/reuse this presentation
 
 # What is Paleomagnetism?
 
-- The study of Earth’s magnetic field as <b>recorded</b> in rocks and sediments over <b>geological time</b>.
+- The study of Earth’s magnetic field as <b>recorded</b> in rocks.
 
 ===============================================================================
 # How magnetic minerals are formed?
@@ -109,7 +109,7 @@ Souza-Junior (2024)
 </div>
 <div class="footnote-center">
 
-[Glenn et a. (2017)](https://doi.org/10.1002/2017gc006946)
+[aRAUJO et a. (2017)](https://doi.org/10.1002/2017gc006946)
 
 </div>
 
@@ -122,7 +122,7 @@ Souza-Junior (2024)
 </div>
 <div class="footnote-left">
 
-[Araujo et al. (2019)](https://doi.org/10.3390/s19071636)
+[lENNNN et al. (2019)](https://doi.org/10.3390/s19071636)
 
 
 </div>
@@ -252,7 +252,8 @@ Modelling and processing magnetic microscopy data
 <li class='fragment'> <b>Contrast stretching:</b>  
   Uses percentiles (1st and 99th) to enhance weak particles</li>  
 <li class='fragment'> <b>LoG (Laplacian of Gaussian) segmentation:</b>
-  Detects “blobs” → 1 window = 1 particle </li> 
+  Detects “blobs” → 1 window = 1 particle </li>
+<li class="fragment">Rank by decreasing signal strength</li>
 </ul>
 
 ===============================================================================
@@ -268,13 +269,17 @@ $$
 ===============================================================================
 
 # Computing the Derivatives
+<div class="text_left">
 <ul>
   <li>Use <strong>second-order central finite differences</strong> for spatial derivatives:</li>
 </ul>
+</div>
 $$\Delta_xf(x, y, z) ≈ \frac{f(x + \Delta_{x,y,z}) - f(x - \Delta_{x,y,z})}{2\Delta_{x}}$$
+<div class="text_left">
 <ul>
-  <li>For ∂z: apply <strong>upward and downward continuation</strong> in the wavenumber domain.</li>
+  <li>For ∂z: apply <strong>upward</strong> and <b>downward</b> in the frequency domain.</li>
 </ul>
+</div>
 
 ===============================================================================
 
@@ -289,34 +294,33 @@ $$\Delta_xf(x, y, z) ≈ \frac{f(x + \Delta_{x,y,z}) - f(x - \Delta_{x,y,z})}{2\
 
 ===============================================================================
 
-# Step 2: Position Estimation
 
-- **Goal:** Estimate 3D location of magnetic particles.
-- **Method:** Euler Deconvolution (ED)
+# Step 2: Iterative processing (per window)
 <ul>
-  <li class="fragment">Assumes dipolar source model</li>
-  <li class="fragment">Applied to each segmented data region</li>
-  <li class="fragment">Yields source position estimate</li>
+  <li>(a) <strong>Isolate data</strong> – Select magnetic data inside window</li>
+  <li>(b) <strong>Euler deconvolution</strong> – Estimate source <em>position</em></li>
+  <li>(c) <strong>Linear inversion</strong> – Estimate dipole <em>moment</em> using fixed position</li>
+  <li>(d) <strong>Non-linear inversion</strong> – Refine position & moment via FIX!!![Nelder-Mead](Gao & Han, 2010; Nelder & Mead, 1965)</li>
+  <li>(e) <strong>Signal removal</strong> – Forward model dipole & subtract from full dataset</li>
 </ul>
+
 
 ===============================================================================
 
- <h1>What is Euler Deconvolution?</h1>
-
-<div class="fragment">
-
-- A method to estimate the location and depth of magnetic sources from total field data.</p>
-
+# Euler Deconvolution
+<p class="fragment text-left"><b>What it is:</b> a method to estimate the location and depth of magnetic sources from total field data</p>
+<div class="text-left fragment">
+  <b>Characteristics:</b><br>
+  <ul class="text-left"> 
+    <li class="fragment ">Assumes dipolar source model</li>
+    <li class="fragment">Applied to each segmented data region</li>
+    <li class="fragment">Yields source position estimate</li>
+    <li class="fragment">Based on Euler’s homogeneity equation</li>
+  </ul>
 </div>
 
-===============================================================================
 
-<h1>The Idea Behind It</h1>
-<ul>
-  <li class="fragment">Uses spatial gradients of the magnetic field</li>
-  <li class="fragment">Assumes simple source geometry</li>
-  <li class="fragment">Based on Euler’s homogeneity equation</li>
-</ul>
+
 
 
 ===============================================================================
@@ -327,6 +331,7 @@ $$
 $$ 
 <div class="text-left">
 
+- $x,y,z$ : coordinates ofc;adsmlvikdfsbvsdfovkl,jbh the magnetic field source
 - $x_c,y_c,z_c$ : coordinates of the magnetic field source
 - $f$ : any function (Ex.: bz)
 - $b$ : base level (constant shift in the signal)
@@ -429,7 +434,7 @@ $$\bold{Gp=h}$$
 <!-- .slide: class="slide-transition" -->
 
 
-# Assuming that errors in the spatial derivatives of $f$ are negligible
+# Assuming that noise in the spatial derivatives of $f$ are negligible
 
 ===============================================================================
 
@@ -493,79 +498,197 @@ $$
     \]
   </li>
   <li>
-    <strong>Solve the normal equations:</strong><br>
+    <strong>Solve the normal equations and estimate $x_c$, $y_c$, $z_c$ and $b$:</strong><br>
     \[
       \boxed{
       \mathbf{p} = (\mathbf{G}^\top \mathbf{G})^{-1} \mathbf{G}^\top \mathbf{h}^o
       }
     \]
   </li>
-  <p>From that we estimate $x_c$, $y_c$, $z_c$ and $b$</p>
 </ol>
 
 ===============================================================================
+<!-- .slide: class="slide-transition" -->
 
-<!-- .slide: data-background-opacity="1" data-background-image="assets/issue-1.png"  data-background-size="contain" data-background-color="#262626" -->
 
-===============================================================================
-
-<!-- .slide: data-background-opacity="1" data-background-image="assets/benchmark.png"  data-background-size="contain" data-background-color="#262626" -->
+# Linear inversion
 
 ===============================================================================
 
-<!-- .slide: data-background-opacity="1" data-background-image="assets/issue-figshare.png"  data-background-size="contain" data-background-color="#262626" -->
+<h1>Dipole Field Model</h1>
+<p class="text-left">The field $\mathbf{b}$ generated by a dipole $\mathbf{m} = [m_x, m_y, m_z]^T$:</p>
+$$
+\mathbf{b} = 
+\begin{bmatrix}
+b_x \\
+b_y \\
+b_z
+\end{bmatrix}
+=
+\frac{\mu_0}{4\pi}
+\begin{bmatrix}
+\frac{\partial^2}{\partial x \partial x} \frac{1}{r} & \frac{\partial^2}{\partial x \partial y} \frac{1}{r} & \frac{\partial^2}{\partial x \partial z} \frac{1}{r} \\
+\frac{\partial^2}{\partial y \partial x} \frac{1}{r} & \frac{\partial^2}{\partial y \partial y} \frac{1}{r} & \frac{\partial^2}{\partial y \partial z} \frac{1}{r} \\
+\frac{\partial^2}{\partial z \partial x} \frac{1}{r} & \frac{\partial^2}{\partial z \partial y} \frac{1}{r} & \frac{\partial^2}{\partial z \partial z} \frac{1}{r}
+\end{bmatrix}
+\begin{bmatrix}
+m_x \\
+m_y \\
+m_z
+\end{bmatrix}
+=
+\frac{\mu_0}{4\pi} \mathbf{M} \mathbf{m}
+$$
+<br>
+<div class="text-left"><ul>
+<li> $r=\sqrt{(x-x_c)^2+(y-y_c)^2+(z-z_c)^2}$ </li>
+<li> MUUUUU </li>
+
+</ul></div>
+
 
 ===============================================================================
 
-<!-- .slide: data-background-opacity="1" data-background-image="assets/fatiando-data-1.png"  data-background-size="contain" data-background-color="#262626" -->
+<h1>System for $b_z$</h1>
+
+
+$$
+\mathbf{b} = 
+\begin{bmatrix}
+b_x \\
+b_y \\
+b_z
+\end{bmatrix}
+=
+\frac{\mu_0}{4\pi}
+\begin{bmatrix}
+\frac{\partial^2}{\partial x \partial x} \frac{1}{r} & \frac{\partial^2}{\partial x \partial y} \frac{1}{r} & \frac{\partial^2}{\partial x \partial z} \frac{1}{r} \\
+\frac{\partial^2}{\partial y \partial x} \frac{1}{r} & \frac{\partial^2}{\partial y \partial y} \frac{1}{r} & \frac{\partial^2}{\partial y \partial z} \frac{1}{r} \\
+\frac{\partial^2}{\partial z \partial x} \frac{1}{r} & \frac{\partial^2}{\partial z \partial y} \frac{1}{r} & \frac{\partial^2}{\partial z \partial z} \frac{1}{r}
+\end{bmatrix}
+\begin{bmatrix}
+m_x \\
+m_y \\
+m_z
+\end{bmatrix}
+=
+\frac{\mu_0}{4\pi} \mathbf{M} \mathbf{m}
+$$
+<br>
+$$
+\mathbf{b}_z = 
+\begin{bmatrix}
+b_x \\
+b_y \\
+b_z
+\end{bmatrix}
+=
+\frac{\mu_0}{4\pi}
+\begin{bmatrix}
+\frac{\partial^2}{\partial z \partial x} \frac{1}{r} & \frac{\partial^2}{\partial z \partial y} \frac{1}{r} & \frac{\partial^2}{\partial z \partial z} \frac{1}{r}
+\end{bmatrix}
+\begin{bmatrix}
+m_x \\
+m_y \\
+m_z
+\end{bmatrix}
+=
+\frac{\mu_0}{4\pi} \mathbf{M}_z \mathbf{m}
+$$
+
+<p class="text-left">$$ b_z = \frac{\mu_0}{4\pi} \mathbf{M}_z \mathbf{m} $$</p>
+<p class="text-left">For $N$ observations:</p>
+$$
+A \mathbf{m} = \mathbf{d}
+$$
+<p class="text-left">$\mathbf{A}$: Jacobian</p>
 
 ===============================================================================
 
-<!-- .slide: data-background-opacity="1" data-background-image="assets/export.png"  data-background-size="contain" data-background-color="#262626" -->
-
-===============================================================================
-
-<!-- .slide: data-background-opacity="1" data-background-image="assets/issue-stereogram.png"  data-background-size="contain" data-background-color="#262626" -->
-
-===============================================================================
-
-# Stereonet
-
-<div class="row">
-<div class="col-large small">
-
-
-<img src="assets/stereonet.png">
-
-</div>
-<div class="col-large small">
-
-<img src="assets/stereogram-1.png">
-
-</div>
-
-===============================================================================
-
-# Stereonet
-
-<div class="row">
-<div class="col-large small">
-
-
-<img src="assets/stereonet.png">
-
-</div>
-<div class="col-large small">
-
-<img src="assets/stereogram-magali.png">
-
-</div>
+# Computing the Derivatives
+<ul>
+  <li>Use <strong>second-order central finite differences</strong> for spatial derivatives:</li>
+</ul>
+$$
+\frac{\partial^2}{\partial z \partial x} \frac{1}{r} = \frac{3(z - z_c)(x - x_c)}{r^5}
+$$
+$$
+\frac{\partial^2}{\partial z \partial y} \frac{1}{r} = \frac{3(z - z_c)(y - y_c)}{r^5}
+$$
+$$
+\frac{\partial^2}{\partial z \partial z} \frac{1}{r} = \frac{3(z - z_c)^2}{r^5} - \frac{1}{r^3}
+$$
 
 ===============================================================================
 
 
+<h1>Problem Formulation</h1>
+<p class="text-left">Given $N$ observations of $b_{z}$ in a window containing a single source an $N\times 3$ linear system is formed:</p>
+\[
+\underbrace{  
+\begin{bmatrix}
+\frac{\mu_0}{4\pi} \frac{3(z_1 - z_c)(x_1 - x_c)}{r_1^5} & \frac{\mu_0}{4\pi} \frac{3(z_1 - z_c)(y_1 - y_c)}{r_1^5} & \frac{\mu_0}{4\pi} \left( \frac{3(z_1 - z_c)^2}{r_1^5} - \frac{1}{r_1^3} \right) \\
+\frac{\mu_0}{4\pi} \frac{3(z_2 - z_c)(x_2 - x_c)}{r_2^5} & \frac{\mu_0}{4\pi} \frac{3(z_2 - z_c)(y_2 - y_c)}{r_2^5} & \frac{\mu_0}{4\pi} \left( \frac{3(z_2 - z_c)^2}{r_2^5} - \frac{1}{r_2^3} \right) \\
+\vdots & \vdots & \vdots \\
+\frac{\mu_0}{4\pi} \frac{3(z_N - z_c)(x_N - x_c)}{r_N^5} & \frac{\mu_0}{4\pi} \frac{3(z_N - z_c)(y_N - y_c)}{r_N^5} & \frac{\mu_0}{4\pi} \left( \frac{3(z_N - z_c)^2}{r_N^5} - \frac{1}{r_N^3} \right)
+\end{bmatrix}}_{\text{Jacobian matrix}}
+\underbrace{
+\begin{bmatrix}
+m_x \\
+m_y \\
+m_z
+\end{bmatrix}}_{\text{Parameter vector}}
+=
+\underbrace{
+\begin{bmatrix}
+b_{z_1} \\
+b_{z_2} \\
+\vdots \\
+b_{z_N}
+\end{bmatrix}}_{\text{Observation vector}}
+\]
+<p class="fragment">$$\mathbf{Am=b}$$</p>
+
+===============================================================================
+<h1>Least Squares Estimation</h1>
+<p class="text-left">We minimize the misfit function:</p>
+$$\Gamma(\mathbf{m}) = \|\mathbf{d}^{o}-\mathbf{A}\mathbf{m}\|^2$$
+<p class="text-left">Leading to the normal equations:</p>
+$$\mathbf{A}^T\mathbf{A}\mathbf{m} = \mathbf{A}^T\mathbf{d}^{\prime}$$
+<p class="fragment">Solution gives estimated dipole moment $\mathbf{\hat{m}}$</p>
+
+===============================================================================
+<h1>Converting to Interpretable Parameters</h1>
+<p>The dipole moment vector can be expressed as:</p>
+$$\begin{aligned}
+I &= -\tan^{-1}\frac{m_z}{\sqrt{m_x^2+m_y^2}} \\
+D &= \tan^{-1}\frac{m_y}{m_x} \\
+m &= \sqrt{m_x^2 + m_y^2 + m_z^2}
+\end{aligned}$$
+
+[Tauxe!!!!!!!!!!!!!!!!!!!!!!!!!]
 
 
+===============================================================================
+
+<h1>Least Squares Solution</h1>
+<p>Error function:</p>
+<p>$$ \Gamma(\mathbf{m}) = \| \mathbf{d} - A\mathbf{m} \|^2 $$</p>
+<p>Solution:</p>
+<p>$$ \mathbf{m} = (A^T A)^{-1} A^T \mathbf{d} $$</p>
+\
+
+===============================================================================
+
+<h1>Result</h1>
+<p>$$ \mathbf{m} = (A^T A)^{-1} A^T \mathbf{d} $$</p>
+<p>We obtain $\mathbf{m} = [m_x, m_y, m_z]^T$</p>
+<p>Then compute:</p>
+<ul>
+  <li>$|\mathbf{m}| = \sqrt{m_x^2 + m_y^2 + m_z^2}$</li>
+  <li>Inclination $I = \tan^{-1}(m_z / \sqrt{m_x^2 + m_y^2})$</li>
+  <li>Declination $D = \tan^{-1}(m_y / m_x)$</li>
+</ul>
 
 ===============================================================================
 

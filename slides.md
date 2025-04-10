@@ -243,7 +243,7 @@ Modelling and processing magnetic microscopy data
 
 ===============================================================================
 
-## Step 1: Automatic Source Detection and Separation
+## Step 1: Source Detection
 - **Goal:** isolate each magnetic particle in the image  
 - **Methods used:**
 <ul>
@@ -253,7 +253,6 @@ Modelling and processing magnetic microscopy data
   Uses percentiles (1st and 99th) to enhance weak particles</li>  
 <li class='fragment'> <b>LoG (Laplacian of Gaussian) segmentation:</b>
   Detects “blobs” → 1 window = 1 particle </li> 
-<li class='fragment'> Windows at borders are discarded</li>
 </ul>
 
 ===============================================================================
@@ -501,6 +500,7 @@ $$
       }
     \]
   </li>
+  <p>From that we estimate $x_c$, $y_c$, $z_c$ and $b$</p>
 </ol>
 
 ===============================================================================

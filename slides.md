@@ -239,7 +239,24 @@ Modelling and processing magnetic microscopy data
 
 ===============================================================================
 
-<!-- .slide: data-background-opacity="1" data-background-image="assets/souza-jr-1.png"  data-background-size="contain" data-background-color="#262626" -->
+# Display Gelson's papers here
+
+===============================================================================
+
+<!-- .slide: data-background-opacity="1" data-background-image="assets/synthetic.png"  data-background-size="contain" data-background-color="#262626" -->
+
+===============================================================================
+
+<p class="text-left"> <b>Step 1 - Source Detection</b></p>
+<p class="text-left"> <b>Step 2 - Iterative processing (per window)</b></p>
+<ul>
+  <li>(a) <strong>Isolate data</strong> – Select magnetic data inside window</li>
+  <li>(b) <strong>Euler deconvolution</strong> – Estimate source <em>position</em></li>
+  <li>(c) <strong>Linear inversion</strong> – Estimate dipole <em>moment</em> using fixed position</li>
+  <li>(d) <strong>Non-linear inversion</strong> – Refine position & moment via FIX!!![Nelder-Mead](Gao & Han, 2010; Nelder & Mead, 1965)</li>
+  <li>(e) <strong>Signal removal</strong> – Forward model dipole & subtract from full dataset</li>
+</ul>
+<p class="text-left"> <b>Step 3 - Repeat detection on residual data:</b> Apply steps 1 and 2  to the stripped dataset to identify new sources and compute their parameters
 
 ===============================================================================
 
@@ -247,6 +264,7 @@ Modelling and processing magnetic microscopy data
 - **Goal:** isolate each magnetic particle in the image  
 - **Methods used:**
 <ul>
+<li class='fragment'> Upward continuation</li> 
 <li class='fragment'> <b>Total Gradient Amplitude (TGA):</b>  
   Enhances signal near the source (high-pass filter)</li>  
 <li class='fragment'> <b>Contrast stretching:</b>  
@@ -293,7 +311,60 @@ $$\Delta_xf(x, y, z) ≈ \frac{f(x + \Delta_{x,y,z}) - f(x - \Delta_{x,y,z})}{2\
 </ul>
 
 ===============================================================================
+<div class="row">
+<div class="col"><img src="assets/synthetic.png" style="width: 100%" ></div>
+<div class="col"><img src="assets/tga_iso.png" style="width: 80%" ></div>
+</div>
 
+===============================================================================
+
+# Contrast Stretching
+- **Goal**: Rescale TGA values to highlight weak/strong signals.  
+- **Operation**: Per-pixel transformation to normalize data: 
+
+<p>
+\[
+\text{TGA}_{\text{rescaled}} = 2 \left( \frac{\text{TGA} - v_{\min}}{v_{\max} - v_{\min}} \right) - 1
+\]
+
+</p>
+
+<ul>
+<li>$ v_{\text{min}} = 1^\text{st} $ percentile  </li>
+<li>$ v_{\text{max}} = 99^\text{th} $ percentile  </li>
+<li><b>Output:</b> values stretched to range $[-1, 1]$</li>
+</ul>
+
+===============================================================================
+# Why Percentile Bounds?
+- **Robust Scaling**:  
+  - Ignores extreme outliers (e.g., sensor noise).  
+- **Empirical Validation**:  
+  - Works well for real magnetic microscopy datasets.  
+- **Dynamic Range**: Ensures both weak and strong signals are visible.
+
+
+===============================================================================
+<!-- .slide: data-background-opacity="1" data-background-image="assets/tga_stretched.png"  data-background-size="contain" data-background-color="#262626" -->
+
+===============================================================================
+# LoG Blob Detection
+- **Algorithm**: Laplacian of Gaussian (LoG) (Kong et al., 2013).  
+- **Purpose**: Detect local maxima ("blobs") in rescaled TGA image.  
+- **Advantages**:  
+  - Ideal for bright blobs on dark backgrounds.  
+  - Accurately identifies particle locations/sizes.  
+- **Computation**: Fast for typical magnetic microscopy image sizes.  
+
+
+===============================================================================
+# Implementation Notes
+- **Border Handling**: Exclude blobs near image edges to avoid truncation artifacts.  
+- **One-Time Cost**: LoG runs once per image.  
+- **Trade-off**: Higher accuracy at the cost of longer runtime (acceptable for dataset sizes).  
+
+
+===============================================================================
 
 # Step 2: Iterative processing (per window)
 <ul>
@@ -304,6 +375,11 @@ $$\Delta_xf(x, y, z) ≈ \frac{f(x + \Delta_{x,y,z}) - f(x - \Delta_{x,y,z})}{2\
   <li>(e) <strong>Signal removal</strong> – Forward model dipole & subtract from full dataset</li>
 </ul>
 
+===============================================================================
+<!-- .slide: class="slide-transition" -->
+
+
+# Euler Deconvolution
 
 ===============================================================================
 
@@ -318,9 +394,6 @@ $$\Delta_xf(x, y, z) ≈ \frac{f(x + \Delta_{x,y,z}) - f(x - \Delta_{x,y,z})}{2\
     <li class="fragment">Based on Euler’s homogeneity equation</li>
   </ul>
 </div>
-
-
-
 
 
 ===============================================================================
@@ -668,27 +741,57 @@ m &= \sqrt{m_x^2 + m_y^2 + m_z^2}
 
 [Tauxe!!!!!!!!!!!!!!!!!!!!!!!!!]
 
+===============================================================================
+<!-- .slide: class="slide-transition" -->
+
+
+# Non-Linear inversion
 
 ===============================================================================
 
-<h1>Least Squares Solution</h1>
-<p>Error function:</p>
-<p>$$ \Gamma(\mathbf{m}) = \| \mathbf{d} - A\mathbf{m} \|^2 $$</p>
-<p>Solution:</p>
-<p>$$ \mathbf{m} = (A^T A)^{-1} A^T \mathbf{d} $$</p>
-\
+<h1>Problem with Linear Inversion</h1>
+<p class="fragment text-left">We now have estimatives for position and magnetic moment of the sources</p>
+<p class="fragment text-left">However <strong>interfering sources</strong> distort these estimates</p>
+<h2 class="fragment"><strong>Solution:</strong> Joint non-linear optimization</h2>
 
 ===============================================================================
 
-<h1>Result</h1>
-<p>$$ \mathbf{m} = (A^T A)^{-1} A^T \mathbf{d} $$</p>
-<p>We obtain $\mathbf{m} = [m_x, m_y, m_z]^T$</p>
-<p>Then compute:</p>
+<h1>Non-Linear Misfit Function</h1>
+<div class="math-block">
+    \[
+    \xi(\mathbf{x}, \mathbf{m}) = \| (\mathbf{d}^o - b) - \mathbf{d}(\mathbf{x}, \mathbf{m}) \|_2^2
+    \]
+</div>
+<p >Jointly optimizes position \(\mathbf{x}\) and dipole moment \(\mathbf{m}\)</p>
 <ul>
-  <li>$|\mathbf{m}| = \sqrt{m_x^2 + m_y^2 + m_z^2}$</li>
-  <li>Inclination $I = \tan^{-1}(m_z / \sqrt{m_x^2 + m_y^2})$</li>
-  <li>Declination $D = \tan^{-1}(m_y / m_x)$</li>
+    <li>\(\mathbf{d}^o \): observed data</li>
+    <li>\(\mathbf{d}(\mathbf{x}, \mathbf{m})\): forward model prediction</li>
 </ul>
+
+
+===============================================================================
+
+<h2>Why Nelder-Mead?</h2>
+<ul>
+    <li class="fragment">No need for gradient calculations</li>
+    <li class="fragment">Works with irregular/noisy functions</li>
+    <li class="fragment">Simple to implement</li>
+    <li class="fragment">Effective for low-dimensional problems (like our 6-parameter dipole problem)</li>
+</ul>
+
+===============================================================================
+
+<p class="text-left"> <b>Step 1 - Source Detection</b></p>
+<p class="text-left"> <b>Step 2 - Iterative processing (per window)</b></p>
+<ul>
+  <li>(a) <strong>Isolate data</strong> – Select magnetic data inside window</li>
+  <li>(b) <strong>Euler deconvolution</strong> – Estimate source <em>position</em></li>
+  <li>(c) <strong>Linear inversion</strong> – Estimate dipole <em>moment</em> using fixed position</li>
+  <li>(d) <strong>Non-linear inversion</strong> – Refine position & moment via FIX!!![Nelder-Mead](Gao & Han, 2010; Nelder & Mead, 1965)</li>
+  <li>(e) <strong>Signal removal</strong> – Forward model dipole & subtract from full dataset</li>
+</ul>
+<p class="fragment text-left"> <b>Step 3 - Repeat detection on residual data:</b> Apply steps 1 and 2  to the stripped dataset to identify new sources and compute their parameters
+<p class="fragment text-left">This step ensures weaker or previously masked sources are detected after removing stronger signals.</p>
 
 ===============================================================================
 

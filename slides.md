@@ -795,7 +795,42 @@ m &= \sqrt{m_x^2 + m_y^2 + m_z^2}
 
 ===============================================================================
 
+<!-- .slide: data-background-opacity="1" data-background-image="assets/re-detection-methodology.png"  data-background-size="contain" data-background-color="#262626" -->
+
+===============================================================================
+
+<!-- .slide: data-background-opacity="1" data-background-image="assets/readme-banner.png"  data-background-size="contain" data-background-color="#262626" -->
+
+===============================================================================
+<!-- .slide: data-background-opacity="1" data-background-image="assets/github.png"  data-background-size="contain" data-background-color="#262626" -->
+
+===============================================================================
+<!-- .slide: data-background-opacity="1" data-background-image="assets/pull_requests.png"  data-background-size="contain" data-background-color="#262626" -->
+
+===============================================================================
+<!-- .slide: data-background-opacity="1" data-background-image="assets/pull_request_details.png"  data-background-size="contain" data-background-color="#262626" -->
+
+===============================================================================
+<!-- .slide: data-background-opacity="1" data-background-image="assets/checks.png"  data-background-size="contain" data-background-color="#262626" -->
+
+===============================================================================
+
+<!-- .slide: data-background-opacity="1" data-background-image="assets/tests.png"  data-background-size="contain" data-background-color="#262626" -->
+
+
+===============================================================================
+<!-- .slide: data-background-opacity="1" data-background-image="assets/documentation.png"  data-background-size="contain" data-background-color="#262626" -->
+
+===============================================================================
+
+<!-- .slide: data-background-opacity="1" data-background-image="assets/api.png"  data-background-size="contain" data-background-color="#262626" -->
+
+===============================================================================
+<!-- .slide: data-background-opacity="1" data-background-image="assets/doc_function.png"  data-background-size="contain" data-background-color="#262626" -->
+
+===============================================================================
 <!-- .slide: data-background-opacity="0.2" data-background-image="assets/magali-logo.png"  data-background-size="contain" data-background-color="#262626" -->
+
 
 <div class="r-stretch centered">
 <div>

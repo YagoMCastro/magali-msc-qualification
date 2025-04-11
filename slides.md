@@ -52,20 +52,17 @@ Feel free to screenshot/share/reuse this presentation
 </div>
 
 ===============================================================================
-
 # What is Paleomagnetism?
-
 - The study of Earth’s magnetic field as <b>recorded</b> in rocks.
 
 ===============================================================================
-# How magnetic minerals are formed?
+# How minerals are magnetized?
 <ul>
   <li><b>Thermoremanent Magnetization (TRM): </b>igneous rocks record Earth’s magnetic field as they cool below the Curie point</li>
   <li><b>Depositional Remanent Magnetization (DRM):</b> magnetic particles in sediments align with Earth’s field during deposition in aquatic environments</li>
 </ul>
 
 ===============================================================================
-
 # Why is paleomagnetism important?
 
 <ul>
@@ -76,19 +73,14 @@ Feel free to screenshot/share/reuse this presentation
 </ul>
 
 ===============================================================================
-
 <img src="assets/geomag.svg" style="width: 50%" >
 
 ===============================================================================
-
 <div class="r-stretch">
-
   <img src="assets/sample.svg" height=100%>
-
 </div>
 
 ===============================================================================
-
 <div class="r-stretch">
 
   <img src="assets/microscope-sample.svg" height=100%>
@@ -97,15 +89,13 @@ Feel free to screenshot/share/reuse this presentation
 
 <div class="footnote-center">
 
-Souza-Junior (2024)
+[Souza-Junior (2024)](https://agupubs.onlinelibrary.wiley.com/doi/10.1029/2023GC011082)
 
 </div>
 
 ===============================================================================
 <div class="r-stretch">
-
   <img src="assets/microscope.svg" height=100%>
-
 </div>
 <div class="footnote-center">
 
@@ -114,8 +104,6 @@ Souza-Junior (2024)
 </div>
 
 ===============================================================================
-
-
 <!-- .slide: class="slide-title" data-background-opacity="1" data-background-image="assets/microscope-data.svg"  data-background-size="contain" -->
 
 <div class="r-stretch">
@@ -126,7 +114,6 @@ Souza-Junior (2024)
 </div>
 
 ===============================================================================
-
 # Needs
 <div class="fragment">
 
@@ -146,12 +133,9 @@ Souza-Junior (2024)
 </div>
 
 ===============================================================================
-
-
 <!-- .slide: data-background-opacity="1" data-background-image="assets/readme-banner.png"  data-background-size="contain" data-background-color="#262626" -->
 
 ===============================================================================
-
 <!-- .slide: data-background-opacity="0.2" data-background-image="assets/magali-logo.png"  data-background-size="contain" data-background-color="#262626" -->
 
 <div class="huge ">
@@ -183,7 +167,6 @@ Modelling and processing magnetic microscopy data
 
 ===============================================================================
 <!-- .slide: data-background-opacity="0.2" data-background-image="assets/magali-logo.png"  data-background-size="contain" data-background-color="#262626" -->
-
 # Why do we want to make it?
 
 <div class="fragment text-left">
@@ -226,7 +209,6 @@ Modelling and processing magnetic microscopy data
 
 ===============================================================================
 <img src="assets/paper_1.png" style="width: 80%" >
-
 <img src="assets/paper_2.png" style="width: 80%" >
 
 ===============================================================================
@@ -274,10 +256,10 @@ $$
   <li>Use <strong>second-order central finite differences</strong> for spatial derivatives:</li>
 </ul>
 </div>
-$$\Delta_xf(x, y, z) ≈ \frac{f(x + \Delta_{x,y,z}) - f(x - \Delta_{x,y,z})}{2\Delta_{x}}$$
+$$\Delta_xf(x, y, z) ≈ \frac{f(x + \Delta x,y,z) - f(x - \Delta x,y,z)}{2\Delta_{x}}$$
 <div class="text_left">
 <ul>
-  <li>For ∂z: apply <strong>upward</strong> and <b>downward</b> in the frequency domain.</li>
+  <li>For ∂z: apply <strong>upward</strong> and <b>downward</b> in the frequency domain</li>
 </ul>
 </div>
 
@@ -452,7 +434,7 @@ $$
   \vdots \\
   x_N \partial_x f_N + y_N \partial_y f_N + z_N \partial_z f_N + \eta f_N
   \end{bmatrix}
-  }_{\text{Data vector}}
+  }_{\text{Pseudo-data vector}}
   \]
 </p>
 
@@ -694,14 +676,12 @@ m &= \sqrt{m_x^2 + m_y^2 + m_z^2}
 # Non-Linear inversion
 
 ===============================================================================
-
 <h1>Problem with Linear Inversion</h1>
 <p class="fragment text-left">We now have estimatives for position and magnetic moment of the sources</p>
 <p class="fragment text-left">However <strong>interfering sources</strong> distort these estimates</p>
 <h2 class="fragment"><strong>Solution:</strong> Joint non-linear optimization</h2>
 
 ===============================================================================
-
 <h1>Non-Linear Misfit Function</h1>
 <div class="math-block">
     \[
@@ -714,9 +694,7 @@ m &= \sqrt{m_x^2 + m_y^2 + m_z^2}
     <li>\(\mathbf{d}(\mathbf{x}, \mathbf{m})\): forward model prediction</li>
 </ul>
 
-
 ===============================================================================
-
 <h2>Why Nelder-Mead?</h2>
 <ul>
     <li class="fragment">No need for gradient calculations</li>
@@ -726,7 +704,6 @@ m &= \sqrt{m_x^2 + m_y^2 + m_z^2}
 </ul>
 
 ===============================================================================
-
 <p class="text-left"> <b>Step 1 - Source Detection</b></p>
 <p class="text-left"> <b>Step 2 - Iterative processing (per window)</b></p>
 <ul>
@@ -760,9 +737,7 @@ m &= \sqrt{m_x^2 + m_y^2 + m_z^2}
 <!-- .slide: data-background-opacity="1" data-background-image="assets/checks.png"  data-background-size="contain" data-background-color="#262626" -->
 
 ===============================================================================
-
 <!-- .slide: data-background-opacity="1" data-background-image="assets/tests.png"  data-background-size="contain" data-background-color="#262626" -->
-
 
 ===============================================================================
 <!-- .slide: data-background-opacity="1" data-background-image="assets/documentation.png"  data-background-size="contain" data-background-color="#262626" -->
@@ -785,41 +760,46 @@ m &= \sqrt{m_x^2 + m_y^2 + m_z^2}
 # Schedule
 
 ===============================================================================
-<h2>WP1: Initial Software Prototype | Months: 1–12</h2>
+<h1>WP1: Initial Software Prototype | Months: 1–12</h1>
 <p><strong>Goal:</strong> Develop an initial version of <em>Magali</em> based on Souza-Junior et al. (2023).</p>
-<ul>
-  <li><b>WP1.1:</b> GitHub repo + package structure</li>
-  <li><b>WP1.2:</b> Forward modeling of dipoles + synthetic data</li>
-  <li><b>WP1.3:</b> QDM I/O routines + visualization</li>
-  <li><b>WP1.4:</b> Source detection (Souza-Junior et al.)</li>
-  <li><b>WP1.5:</b> Release v0.1 (internal test)</li>
-  <li><b>WP1.6:</b> Euler Deconvolution in <em>Harmonica</em></li>
-  <li><b>WP1.7:</b> Linear inversion for dipole moments</li>
-  <li><b>WP1.8:</b> Release v0.2 with inversion</li>
-</ul>
+<div class="text-left">
+  <ul>
+    <li><b>WP1.1:</b> GitHub repo + package structure</li>
+    <li><b>WP1.2:</b> Forward modeling of dipoles + synthetic data</li>
+    <li><b>WP1.3:</b> QDM I/O routines + visualization</li>
+    <li><b>WP1.4:</b> Source detection (Souza-Junior et al.)</li>
+    <li><b>WP1.5:</b> Release v0.1 (internal test)</li>
+    <li><b>WP1.6:</b> Euler Deconvolution in <em>Harmonica</em></li>
+    <li><b>WP1.7:</b> Linear inversion for dipole moments</li>
+    <li><b>WP1.8:</b> Release v0.2 with inversion</li>
+  </ul>
+</div>
 
 ===============================================================================
-<h2>WP2: Convolutional Equivalent Layer | Months:11–16</h2>
-<p><strong>Goal:</strong> Integrate method from Takahashi et al. (2022) for better field reconstruction.</p>
-<p><strong>With:</strong> Dr. Oliveira Jr. & Dr. Reis (PINGA Lab)</p>
-<ul>
-  <li><b>WP2.1:</b> Study inverse theory background</li>
-  <li><b>WP2.2:</b> Implement method in <em>Harmonica</em></li>
-  <li><b>WP2.3:</b> Reconstruct <code>Bz</code> from 1 QDM component; compare with FFT</li>
-  <li><b>WP2.4:</b> Extend to multi-component input under noise</li>
-</ul>
+<h1>WP2: Convolutional Equivalent Layer | Months:11–16</h1>
+<p class="text-left"><strong>Goal:</strong> Integrate method from Takahashi et al. (2022) for better field reconstruction.</p>
+<p class="text-left"><strong>With:</strong> Dr. Oliveira Jr. & Dr. Reis (PINGA Lab)</p>
+<div class="text-left">
+  <ul>
+    <li><b>WP2.1:</b> Study inverse theory background</li>
+    <li><b>WP2.2:</b> Implement method in <em>Harmonica</em></li>
+    <li><b>WP2.3:</b> Reconstruct <code>Bz</code> from 1 QDM component; compare with FFT</li>
+    <li><b>WP2.4:</b> Extend to multi-component input under noise</li>
+  </ul>
+</div>
 
 ===============================================================================
-<h2>WP3: Polish & Disseminate</h2>
-<p><strong>Months:</strong> 17–24</p>
-<p><strong>Goal:</strong> Finalize and promote <em>Magali</em> through documentation and outreach.</p>
-<ul>
-  <li>WP3.1: Test with diverse QDM data (incl. CNRS)</li>
-  <li>WP3.2: Build docs + tutorials on <a href="https://fatiando.org/magali">fatiando.org/magali</a></li>
-  <li>WP3.3: Host user workshop (EGU, LatinMag, BEPE)</li>
-  <li>WP3.4: Release v1.0</li>
-  <li>WP3.5: Submit journal article</li>
-</ul>
+<h1>WP3: Polish & Disseminate | Months: 17–24</h1>
+<p class="text-left"><strong>Goal:</strong> Finalize and promote <em>Magali</em> through documentation and outreach.</p>
+<div class="text-left">
+  <ul>
+    <li><b>WP3.1:</b> Test with diverse QDM data (incl. CNRS)</li>
+    <li><b>WP3.2:</b> Build docs + tutorials on <a href="https://fatiando.org/magali">fatiando/magali</a></li>
+    <li><b>WP3.3:</b> Host user workshop (EGU, LatinMag, BEPE)</li>
+    <li><b>WP3.4:</b> Release v1.0</li>
+    <li><b>WP3.5:</b> Submit journal article</li>
+  </ul>
+</div>
 
 ===============================================================================
 <p><strong>BEPE | CNRS | Jul–Dec 2025:</strong></p>
@@ -832,6 +812,19 @@ m &= \sqrt{m_x^2 + m_y^2 + m_z^2}
 
 ===============================================================================
 <!-- .slide: data-background-opacity="1" data-background-image="assets/schedule.png"  data-background-size="contain" data-background-color="#262626" -->
+
+===============================================================================
+<!-- .slide: data-background-opacity="1" data-background-image="assets/grades.png"  data-background-size="contain" data-background-color="#262626" -->
+
+===============================================================================
+<h1>Extracurricular Activities</h1>
+<ul>
+  <li>Análise de Anomalias Magnéticas na Região de Aconcágua: Perspectivas Magnéticas a Partir de Modelagem Computacional e Técnica de Camada de Fontes Equivalentes | <b>Seminar Presenter | June 12, 2024 | Quinzenal Group Meeting Seminar</b></li>
+  <li>Magali: Modelling and inversion of magnetic microscopy data | <b>Seminar Presenter | September 11, 2024 | IAG Science Day 2024</b></li>
+  <li>Kit de sobrevivência digital para cientistas | <b>Teaching Assistent | February 17 to 21, 2025 | XXVII Geophysics Summer School </b></li>
+  <li><b>Deputy Student Representative | 2025</b></li>
+</ul>
+
 
 ===============================================================================
 <!-- .slide: data-background-opacity="0.2" data-background-image="assets/magali-logo.png"  data-background-size="contain" data-background-color="#262626" -->

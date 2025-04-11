@@ -227,11 +227,6 @@ Modelling and processing magnetic microscopy data
 
 ===============================================================================
 
-# How?
-
-
-===============================================================================
-
 # Needs
 
 - Algorithms for **automatic detection** of magnetic **grains** and its **magnetic moment** determination
@@ -829,8 +824,13 @@ m &= \sqrt{m_x^2 + m_y^2 + m_z^2}
 <!-- .slide: data-background-opacity="1" data-background-image="assets/doc_function.png"  data-background-size="contain" data-background-color="#262626" -->
 
 ===============================================================================
-<!-- .slide: data-background-opacity="0.2" data-background-image="assets/magali-logo.png"  data-background-size="contain" data-background-color="#262626" -->
+<!-- .slide: data-background-opacity="1" data-background-image="assets/fatiando-data.png"  data-background-size="contain" data-background-color="#262626" -->
 
+===============================================================================
+<!-- .slide: data-background-opacity="1" data-background-image="assets/morroco.png"  data-background-size="contain" data-background-color="#262626" -->
+
+===============================================================================
+<!-- .slide: data-background-opacity="0.2" data-background-image="assets/magali-logo.png"  data-background-size="contain" data-background-color="#262626" -->
 
 <div class="r-stretch centered">
 <div>

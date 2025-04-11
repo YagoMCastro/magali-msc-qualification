@@ -109,7 +109,7 @@ Souza-Junior (2024)
 </div>
 <div class="footnote-center">
 
-[aRAUJO et a. (2017)](https://doi.org/10.1002/2017gc006946)
+[Araujo et al. (2019)](https://doi.org/10.3390/s19071636)
 
 </div>
 
@@ -122,9 +122,7 @@ Souza-Junior (2024)
 </div>
 <div class="footnote-left">
 
-[lENNNN et al. (2019)](https://doi.org/10.3390/s19071636)
-
-
+[Glenn et al. (2017)](https://doi.org/10.1002/2017gc006946)
 </div>
 
 ===============================================================================
@@ -183,11 +181,7 @@ Modelling and processing magnetic microscopy data
 
 </div>
 
-
-
 ===============================================================================
-
-
 <!-- .slide: data-background-opacity="0.2" data-background-image="assets/magali-logo.png"  data-background-size="contain" data-background-color="#262626" -->
 
 # Why do we want to make it?
@@ -226,35 +220,31 @@ Modelling and processing magnetic microscopy data
 </div>
 
 ===============================================================================
-
 # Needs
 
 - Algorithms for **automatic detection** of magnetic **grains** and its **magnetic moment** determination
 
+===============================================================================
+<img src="assets/paper_1.png" style="width: 80%" >
+
+<img src="assets/paper_2.png" style="width: 80%" >
 
 ===============================================================================
-
-# Display Gelson's papers here
-
-===============================================================================
-
 <!-- .slide: data-background-opacity="1" data-background-image="assets/synthetic.png"  data-background-size="contain" data-background-color="#262626" -->
 
 ===============================================================================
-
 <p class="text-left"> <b>Step 1 - Source Detection</b></p>
 <p class="text-left"> <b>Step 2 - Iterative processing (per window)</b></p>
 <ul>
   <li>(a) <strong>Isolate data</strong> – Select magnetic data inside window</li>
   <li>(b) <strong>Euler deconvolution</strong> – Estimate source <em>position</em></li>
   <li>(c) <strong>Linear inversion</strong> – Estimate dipole <em>moment</em> using fixed position</li>
-  <li>(d) <strong>Non-linear inversion</strong> – Refine position & moment via FIX!!![Nelder-Mead](Gao & Han, 2010; Nelder & Mead, 1965)</li>
+  <li>(d) <strong>Non-linear inversion</strong> – Refine position & moment via <a href="https://academic.oup.com/comjnl/article-abstract/7/4/308/354237?redirectedFrom=fulltext">Nelder-Mead</a></li>
   <li>(e) <strong>Signal removal</strong> – Forward model dipole & subtract from full dataset</li>
 </ul>
 <p class="text-left"> <b>Step 3 - Repeat detection on residual data:</b> Apply steps 1 and 2  to the stripped dataset to identify new sources and compute their parameters
 
 ===============================================================================
-
 ## Step 1: Source Detection
 - **Goal:** isolate each magnetic particle in the image  
 - **Methods used:**
@@ -270,9 +260,7 @@ Modelling and processing magnetic microscopy data
 </ul>
 
 ===============================================================================
-
 # What is TGA?
-
 
 Given a magnetic field $f(x, y, z)$:
 $$
@@ -280,7 +268,6 @@ $$
 $$
 
 ===============================================================================
-
 # Computing the Derivatives
 <div class="text_left">
 <ul>
@@ -295,7 +282,6 @@ $$\Delta_xf(x, y, z) ≈ \frac{f(x + \Delta_{x,y,z}) - f(x - \Delta_{x,y,z})}{2\
 </div>
 
 ===============================================================================
-
 # Advantages of TGA
 <ul>
   <li class="text-left fragment">Always positive</li>
@@ -312,7 +298,6 @@ $$\Delta_xf(x, y, z) ≈ \frac{f(x + \Delta_{x,y,z}) - f(x - \Delta_{x,y,z})}{2\
 </div>
 
 ===============================================================================
-
 # Contrast Stretching
 - **Goal**: Rescale TGA values to highlight weak/strong signals.  
 - **Operation**: Per-pixel transformation to normalize data: 
@@ -338,7 +323,6 @@ $$\Delta_xf(x, y, z) ≈ \frac{f(x + \Delta_{x,y,z}) - f(x - \Delta_{x,y,z})}{2\
   - Works well for real magnetic microscopy datasets.  
 - **Dynamic Range**: Ensures both weak and strong signals are visible.
 
-
 ===============================================================================
 <!-- .slide: data-background-opacity="1" data-background-image="assets/tga_stretched.png"  data-background-size="contain" data-background-color="#262626" -->
 
@@ -351,16 +335,13 @@ $$\Delta_xf(x, y, z) ≈ \frac{f(x + \Delta_{x,y,z}) - f(x - \Delta_{x,y,z})}{2\
   - Accurately identifies particle locations/sizes.  
 - **Computation**: Fast for typical magnetic microscopy image sizes.  
 
-
 ===============================================================================
 # Implementation Notes
 - **Border Handling**: Exclude blobs near image edges to avoid truncation artifacts.  
 - **One-Time Cost**: LoG runs once per image.  
 - **Trade-off**: Higher accuracy at the cost of longer runtime (acceptable for dataset sizes).  
 
-
 ===============================================================================
-
 # Step 2: Iterative processing (per window)
 <ul>
   <li>(a) <strong>Isolate data</strong> – Select magnetic data inside window</li>
@@ -372,12 +353,9 @@ $$\Delta_xf(x, y, z) ≈ \frac{f(x + \Delta_{x,y,z}) - f(x - \Delta_{x,y,z})}{2\
 
 ===============================================================================
 <!-- .slide: class="slide-transition" -->
-
-
 # Euler Deconvolution
 
 ===============================================================================
-
 # Euler Deconvolution
 <p class="fragment text-left"><b>What it is:</b> a method to estimate the location and depth of magnetic sources from total field data</p>
 <div class="text-left fragment">
@@ -390,16 +368,14 @@ $$\Delta_xf(x, y, z) ≈ \frac{f(x + \Delta_{x,y,z}) - f(x - \Delta_{x,y,z})}{2\
   </ul>
 </div>
 
-
 ===============================================================================
 # Euler's Homogeneity Equation
-  
 $$
 (x - x_c)\partial_x f + (y - y_c)\partial_y f + (z - z_c)\partial_z f = (b - f)\eta
 $$ 
 <div class="text-left">
 
-- $x,y,z$ : coordinates ofc;adsmlvikdfsbvsdfovkl,jbh the magnetic field source
+- $x,y,z$ : data coordinates
 - $x_c,y_c,z_c$ : coordinates of the magnetic field source
 - $f$ : any function (Ex.: bz)
 - $b$ : base level (constant shift in the signal)
@@ -411,7 +387,6 @@ $$
 </div>
 
 ===============================================================================
-
 ### Structural index for magnetic (M) and gravity (G) sources of different source geometries.
 
 | Source                     | Smellie model     | SI (M) | SI (G) |
@@ -424,19 +399,13 @@ $$
 | Finite contact/fault   | —                 | 0  | −1     |
 | Infinite contact/fault     | —                 | 0      | ∞  |
 
-
 <div class="footnote-center">
 
 [Reid & Thurston (2014)](https://library.seg.org/doi/10.1190/geo2013-0235.1)
 </div>
 
-
-
-
 ===============================================================================
-
 # Euler's Homogeneity Equation
-  
 $$
 (x - x_c)\partial_x f + (y - y_c)\partial_y f + (z - z_c)\partial_z f = (b - f)\eta
 $$ 
@@ -454,7 +423,6 @@ $$
 </div>
 
 ===============================================================================
-
 # Euler's Homogeneity Equation
 $$
 x_c \ \partial_x f + y_c \\partial_y f + z_c \ \partial_z f + \eta b = x \ \partial_x f + y \ \partial_y f + z \ \partial_z f + \eta f
@@ -500,14 +468,10 @@ $$\bold{Gp=h}$$
 
 ===============================================================================
 <!-- .slide: class="slide-transition" -->
-
-
 # Assuming that noise in the spatial derivatives of $f$ are negligible
 
 ===============================================================================
-
 #  Leats-squares solution
-
 <p class="text-left">We want to solve:</p>
 
 $$
@@ -527,9 +491,7 @@ $$
 </ul>
 </div>
 
-
 ===============================================================================
-
 ## Residual Vector
 
 <p class="text-left">Define the <b>residual</b>:</p>
@@ -545,7 +507,6 @@ $$
 $$
 
 ===============================================================================
-
 # To solve it
 <ol>
   <li>
@@ -577,12 +538,9 @@ $$
 
 ===============================================================================
 <!-- .slide: class="slide-transition" -->
-
-
 # Linear inversion
 
 ===============================================================================
-
 <h1>Dipole Field Model</h1>
 <p class="text-left">The field $\mathbf{b}$ generated by a dipole $\mathbf{m} = [m_x, m_y, m_z]^T$:</p>
 $$
@@ -610,17 +568,13 @@ $$
 <br>
 <div class="text-left"><ul>
 <li> $r=\sqrt{(x-x_c)^2+(y-y_c)^2+(z-z_c)^2}$ </li>
-<li> MUUUUU </li>
-
+<li> $\mu_0$ : magnetic permeability</li>
 </ul></div>
 
-
 ===============================================================================
-
 <h1>System for $b_z$</h1>
-
-
-$$
+<p>
+\[
 \mathbf{b} = 
 \begin{bmatrix}
 b_x \\
@@ -641,8 +595,8 @@ m_z
 \end{bmatrix}
 =
 \frac{\mu_0}{4\pi} \mathbf{M} \mathbf{m}
-$$
-<br>
+\]</p>
+
 $$
 \mathbf{b}_z = 
 \begin{bmatrix}
@@ -669,10 +623,8 @@ $$
 $$
 A \mathbf{m} = \mathbf{d}
 $$
-<p class="text-left">$\mathbf{A}$: Jacobian</p>
 
 ===============================================================================
-
 # Computing the Derivatives
 <ul>
   <li>Use <strong>second-order central finite differences</strong> for spatial derivatives:</li>
@@ -688,8 +640,6 @@ $$
 $$
 
 ===============================================================================
-
-
 <h1>Problem Formulation</h1>
 <p class="text-left">Given $N$ observations of $b_{z}$ in a window containing a single source an $N\times 3$ linear system is formed:</p>
 \[
@@ -720,9 +670,9 @@ b_{z_N}
 ===============================================================================
 <h1>Least Squares Estimation</h1>
 <p class="text-left">We minimize the misfit function:</p>
-$$\Gamma(\mathbf{m}) = \|\mathbf{d}^{o}-\mathbf{A}\mathbf{m}\|^2$$
+$$\Gamma(\mathbf{m}) = \|\mathbf{d}^{o}-\mathbf{A}\mathbf{m}\|^2=(\mathbf{d}^{o}-\mathbf{A}\mathbf{m})^T(\mathbf{d}^{o}-\mathbf{A}\mathbf{m})$$
 <p class="text-left">Leading to the normal equations:</p>
-$$\mathbf{A}^T\mathbf{A}\mathbf{m} = \mathbf{A}^T\mathbf{d}^{\prime}$$
+$$\mathbf{A}^T\mathbf{A}\mathbf{m} = \mathbf{A}^T\mathbf{d}^{o}$$
 <p class="fragment">Solution gives estimated dipole moment $\mathbf{\hat{m}}$</p>
 
 ===============================================================================
@@ -734,12 +684,13 @@ D &= \tan^{-1}\frac{m_y}{m_x} \\
 m &= \sqrt{m_x^2 + m_y^2 + m_z^2}
 \end{aligned}$$
 
-[Tauxe!!!!!!!!!!!!!!!!!!!!!!!!!]
+<div class="footnote-center">
+
+[Tauxe et al. (2018)](https://pubs.geoscienceworld.org/seg/geophysics/article-abstract/47/1/31/71448/EULDPH-A-new-technique-for-making-computer?redirectedFrom=fulltext)
+</div>
 
 ===============================================================================
 <!-- .slide: class="slide-transition" -->
-
-
 # Non-Linear inversion
 
 ===============================================================================
@@ -782,10 +733,10 @@ m &= \sqrt{m_x^2 + m_y^2 + m_z^2}
   <li>(a) <strong>Isolate data</strong> – Select magnetic data inside window</li>
   <li>(b) <strong>Euler deconvolution</strong> – Estimate source <em>position</em></li>
   <li>(c) <strong>Linear inversion</strong> – Estimate dipole <em>moment</em> using fixed position</li>
-  <li>(d) <strong>Non-linear inversion</strong> – Refine position & moment via FIX!!![Nelder-Mead](Gao & Han, 2010; Nelder & Mead, 1965)</li>
+  <li>(d) <strong>Non-linear inversion</strong> – Refine position & moment via <a href="https://academic.oup.com/comjnl/article-abstract/7/4/308/354237?redirectedFrom=fulltext">Nelder-Mead</a></li>
   <li>(e) <strong>Signal removal</strong> – Forward model dipole & subtract from full dataset</li>
 </ul>
-<p class="fragment text-left"> <b>Step 3 - Repeat detection on residual data:</b> Apply steps 1 and 2  to the stripped dataset to identify new sources and compute their parameters
+<p class="text-left"> <b>Step 3 - Repeat detection on residual data:</b> Apply steps 1 and 2  to the stripped dataset to identify new sources and compute their parameters
 <p class="fragment text-left">This step ensures weaker or previously masked sources are detected after removing stronger signals.</p>
 
 ===============================================================================
@@ -830,6 +781,59 @@ m &= \sqrt{m_x^2 + m_y^2 + m_z^2}
 <!-- .slide: data-background-opacity="1" data-background-image="assets/morroco.png"  data-background-size="contain" data-background-color="#262626" -->
 
 ===============================================================================
+<!-- .slide: class="slide-transition" -->
+# Schedule
+
+===============================================================================
+<h2>WP1: Initial Software Prototype | Months: 1–12</h2>
+<p><strong>Goal:</strong> Develop an initial version of <em>Magali</em> based on Souza-Junior et al. (2023).</p>
+<ul>
+  <li><b>WP1.1:</b> GitHub repo + package structure</li>
+  <li><b>WP1.2:</b> Forward modeling of dipoles + synthetic data</li>
+  <li><b>WP1.3:</b> QDM I/O routines + visualization</li>
+  <li><b>WP1.4:</b> Source detection (Souza-Junior et al.)</li>
+  <li><b>WP1.5:</b> Release v0.1 (internal test)</li>
+  <li><b>WP1.6:</b> Euler Deconvolution in <em>Harmonica</em></li>
+  <li><b>WP1.7:</b> Linear inversion for dipole moments</li>
+  <li><b>WP1.8:</b> Release v0.2 with inversion</li>
+</ul>
+
+===============================================================================
+<h2>WP2: Convolutional Equivalent Layer | Months:11–16</h2>
+<p><strong>Goal:</strong> Integrate method from Takahashi et al. (2022) for better field reconstruction.</p>
+<p><strong>With:</strong> Dr. Oliveira Jr. & Dr. Reis (PINGA Lab)</p>
+<ul>
+  <li><b>WP2.1:</b> Study inverse theory background</li>
+  <li><b>WP2.2:</b> Implement method in <em>Harmonica</em></li>
+  <li><b>WP2.3:</b> Reconstruct <code>Bz</code> from 1 QDM component; compare with FFT</li>
+  <li><b>WP2.4:</b> Extend to multi-component input under noise</li>
+</ul>
+
+===============================================================================
+<h2>WP3: Polish & Disseminate</h2>
+<p><strong>Months:</strong> 17–24</p>
+<p><strong>Goal:</strong> Finalize and promote <em>Magali</em> through documentation and outreach.</p>
+<ul>
+  <li>WP3.1: Test with diverse QDM data (incl. CNRS)</li>
+  <li>WP3.2: Build docs + tutorials on <a href="https://fatiando.org/magali">fatiando.org/magali</a></li>
+  <li>WP3.3: Host user workshop (EGU, LatinMag, BEPE)</li>
+  <li>WP3.4: Release v1.0</li>
+  <li>WP3.5: Submit journal article</li>
+</ul>
+
+===============================================================================
+<p><strong>BEPE | CNRS | Jul–Dec 2025:</strong></p>
+<ul>
+  <li>Test Magali on new microscope data</li>
+  <li>Fill feature gaps + refine tools</li>
+  <li>Explore extended use of eq. sources</li>
+  <li>Host local workshop</li>
+</ul>
+
+===============================================================================
+<!-- .slide: data-background-opacity="1" data-background-image="assets/schedule.png"  data-background-size="contain" data-background-color="#262626" -->
+
+===============================================================================
 <!-- .slide: data-background-opacity="0.2" data-background-image="assets/magali-logo.png"  data-background-size="contain" data-background-color="#262626" -->
 
 <div class="r-stretch centered">
@@ -844,7 +848,7 @@ Contact:
 <br>
 Source code for this presentation:
 <br>
-[github.com/YagoMCastro/science-day-2024-magali](https://github.com/leouieda/talk-template)
+[https://yagomcastro.github.io/magali-msc-qualification/](https://github.com/YagoMCastro/magali-msc-qualification)
 
 <i class="fab fa-creative-commons"></i><i class="fab fa-creative-commons-by"></i>
 <br>

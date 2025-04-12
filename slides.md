@@ -28,7 +28,7 @@ The reveal.js configuration can be found in index.html
 <i class="fa fa-calendar-alt" style="margin: 0 10px 0 0"></i>
 15 April 2022
 <span style="margin: 0 20px"></span>
-Master's Degree Qualification Exam | IAG
+Master's Degree Seminar | IAG
 
 <!-- Permission to reuse and CC-BY license logo -->
 <i class="fa fa-camera" style="margin: 0 10px 0 0"></i>
@@ -259,7 +259,7 @@ $$
 $$\Delta_xf(x, y, z) ≈ \frac{f(x + \Delta x,y,z) - f(x - \Delta x,y,z)}{2\Delta_{x}}$$
 <div class="text_left">
 <ul>
-  <li>For ∂z: apply <strong>upward</strong> and <b>downward</b> in the frequency domain</li>
+  <li>For $\partial z$: apply <strong>upward</strong> and <b>downward</b> in the frequency domain</li>
 </ul>
 </div>
 
@@ -294,7 +294,7 @@ $$\Delta_xf(x, y, z) ≈ \frac{f(x + \Delta x,y,z) - f(x - \Delta x,y,z)}{2\Delt
 <ul>
 <li>$ v_{\text{min}} = 1^\text{st} $ percentile  </li>
 <li>$ v_{\text{max}} = 99^\text{th} $ percentile  </li>
-<li><b>Output:</b> values stretched to range $[-1, 1]$</li>
+<li><b>Output:</b> values stretched to range $[0, 1]$</li>
 </ul>
 
 ===============================================================================
@@ -310,18 +310,22 @@ $$\Delta_xf(x, y, z) ≈ \frac{f(x + \Delta x,y,z) - f(x - \Delta x,y,z)}{2\Delt
 
 ===============================================================================
 # LoG Blob Detection
-- **Algorithm**: Laplacian of Gaussian (LoG) (Kong et al., 2013).  
-- **Purpose**: Detect local maxima ("blobs") in rescaled TGA image.  
-- **Advantages**:  
-  - Ideal for bright blobs on dark backgrounds.  
-  - Accurately identifies particle locations/sizes.  
-- **Computation**: Fast for typical magnetic microscopy image sizes.  
+<ul>
+  <li class="fragment text-left"><b>Algorithm:</b> Laplacian of Gaussian (LoG) (Kong et al., 2013)</li>
+  <li class="fragment text-left"><b>Purpose:</b> Detect local maxima ("blobs") in rescaled TGA image</li>
+  <li class="fragment text-left"><b>Advantages:</b></li>
+  <ul>
+    <li class="fragment text-left">Ideal for dark blobs on light backgrounds</li>
+    <li class="fragment text-left">Accurately identifies particle locations/sizes</li>
+  </ul>
+  <li class="fragment text-left"><b>Computation:</b> Fast for typical magnetic microscopy image sizes</li>
+</ul>
 
 ===============================================================================
 # Implementation Notes
-- **Border Handling**: Exclude blobs near image edges to avoid truncation artifacts.  
+- **Border Handling**: exclude blobs near image edges to avoid truncation artifacts.  
 - **One-Time Cost**: LoG runs once per image.  
-- **Trade-off**: Higher accuracy at the cost of longer runtime (acceptable for dataset sizes).  
+- **Trade-off**: higher accuracy at the cost of longer runtime (acceptable for dataset sizes).  
 
 ===============================================================================
 # Step 2: Iterative processing (per window)
@@ -329,7 +333,7 @@ $$\Delta_xf(x, y, z) ≈ \frac{f(x + \Delta x,y,z) - f(x - \Delta x,y,z)}{2\Delt
   <li>(a) <strong>Isolate data</strong> – Select magnetic data inside window</li>
   <li>(b) <strong>Euler deconvolution</strong> – Estimate source <em>position</em></li>
   <li>(c) <strong>Linear inversion</strong> – Estimate dipole <em>moment</em> using fixed position</li>
-  <li>(d) <strong>Non-linear inversion</strong> – Refine position & moment via FIX!!![Nelder-Mead](Gao & Han, 2010; Nelder & Mead, 1965)</li>
+  <li>(d) <strong>Non-linear inversion</strong> – Refine position & moment via <a href="https://academic.oup.com/comjnl/article-abstract/7/4/308/354237?redirectedFrom=fulltext">Nelder-Mead</a></li>
   <li>(e) <strong>Signal removal</strong> – Forward model dipole & subtract from full dataset</li>
 </ul>
 
@@ -356,12 +360,13 @@ $$
 (x - x_c)\partial_x f + (y - y_c)\partial_y f + (z - z_c)\partial_z f = (b - f)\eta
 $$ 
 <div class="text-left">
-
-- $x,y,z$ : data coordinates
-- $x_c,y_c,z_c$ : coordinates of the magnetic field source
-- $f$ : any function (Ex.: bz)
-- $b$ : base level (constant shift in the signal)
-- $\eta$ : structural index
+<ul>
+  <li class="fragment">$x,y,z$ : data coordinates</li>
+  <li class="fragment">$x_c,y_c,z_c$ : coordinates of the magnetic field source</li>
+  <li class="fragment">$f$ : any homogenous function (Ex.: bz)</li>
+  <li class="fragment">$b$ : base level (constant shift in the signal)</li>
+  <li class="fragment">$\eta$ : structural index</li>
+</ul>
 </div>
 <div class="footnote-center">
 
@@ -369,34 +374,16 @@ $$
 </div>
 
 ===============================================================================
-### Structural index for magnetic (M) and gravity (G) sources of different source geometries.
-
-| Source                     | Smellie model     | SI (M) | SI (G) |
-|----------------------------|-------------------|--------|--------|
-| Sphere                 | Dipole            | 3      | 2      |
-| Vertical line end (pipe)  | Pole              | 2      | 1      |
-| Horizontal line (cylinder) | Line of dipoles  | 2      | 0      |
-| Thin bed fault         | Line of dipoles   | 2      | 2      |
-| Thin sheet edge            | Line of poles     | 1      | 0      |
-| Finite contact/fault   | —                 | 0  | −1     |
-| Infinite contact/fault     | —                 | 0      | ∞  |
-
-<div class="footnote-center">
-
-[Reid & Thurston (2014)](https://library.seg.org/doi/10.1190/geo2013-0235.1)
-</div>
-
-===============================================================================
 # Euler's Homogeneity Equation
 $$
 (x - x_c)\partial_x f + (y - y_c)\partial_y f + (z - z_c)\partial_z f = (b - f)\eta
 $$ 
-<p class="fragment"> Rearranging into a pseudo‐parametric model with parameters $x_c, y_c, z_c,
+<p class="fragment"> Expanding into a pseudo‐parametric model with parameters $x_c, y_c, z_c,
 b$</p>
 <div class="fragment">
 
 $$
-x_c \ \partial_x f + y_c \\partial_y f + z_c \ \partial_z f + \eta b = x \ \partial_x f + y \ \partial_y f + z \ \partial_z f + \eta f
+\underbrace{x_c \partial_x f + y_c \partial_y f + z_c \partial_z f + \eta b}_\text{Predicted} = \underbrace{x \partial_x f + y \partial_y f + z \partial_z f + \eta f}_\text{Observed}
 $$
 </div>
 <div class="footnote-center">
@@ -425,7 +412,7 @@ $$
   \begin{bmatrix}
   x_c \\ y_c \\ z_c \\ b
   \end{bmatrix}
-  }_{\text{Model parameters}}
+  }_{\text{Paremeter vector}}
   =
   \underbrace{
   \begin{bmatrix}
@@ -449,55 +436,34 @@ $$\bold{Gp=h}$$
 </div>
 
 ===============================================================================
-<!-- .slide: class="slide-transition" -->
-# Assuming that noise in the spatial derivatives of $f$ are negligible
-
-===============================================================================
-#  Leats-squares solution
-<p class="text-left">We want to solve:</p>
-
+#  Least-squares solution
 $$
 \mathbf{G} \mathbf{p} = \mathbf{h}
 $$
 
 <div  class= " text-left fragment">
-<p class="text-left">When the system is <b>overdetermined</b> (more equations than unknowns), we seek a <b>least-squares solution</b>:</p>
+<p class="text-left">We use a <b>least-squares solution</b>, with the objective function being:</p>
 
 $$
-\min \Phi (\mathbf{p}) =||\mathbf{h^o} - \mathbf{h}\||^2
+\Phi (\mathbf{p}) =||\mathbf{h^o} - \mathbf{h}\||^2
 $$
 
 <ul>
   <li>$\Phi (\mathbf{p})$ : objective function</li>
   <li>$\mathbf{h^o}$ : observed data</li>
-</ul>
+  <li>$\mathbf{h}$ : predicted data</li></ul>
 </div>
-
-===============================================================================
-## Residual Vector
-
-<p class="text-left">Define the <b>residual</b>:</p>
-
-$$
-\mathbf{r} = \mathbf{h^o} - \mathbf{h}
-$$
-
-<p class="text-left">Objective function to be minimized:</p>
-
-$$
-\Phi(\mathbf{p}) = \|\mathbf{r}\|^2
-$$
 
 ===============================================================================
 # To solve it
 <ol>
-  <li>
+  <li class="fragment">
     <strong>Expand the expression:</strong><br>
     \[
-    \Phi(\mathbf{p}) = (\mathbf{h}^o - \mathbf{G}\mathbf{p})^\top (\mathbf{h}^o - \mathbf{G}\mathbf{p}) = \mathbf{h}^{o\top}\mathbf{h}^o - 2\mathbf{p}^\top \mathbf{G}^\top \mathbf{h}^o + \mathbf{p}^\top \mathbf{G}^\top \mathbf{G} \mathbf{p}
+    \Phi(\mathbf{p}) = (\mathbf{h}^o - \mathbf{G}\mathbf{p})^\top (\mathbf{h}^o - \mathbf{G}\mathbf{p}) = \underbrace{\mathbf{h}^{o\top}\mathbf{h}^o - 2\mathbf{p}^\top \mathbf{G}^\top \mathbf{h}^o + \mathbf{p}^\top \mathbf{G}^\top \mathbf{G} \mathbf{p}}_\text{Paraboloid}
     \]
   </li>
-  <li>
+  <li class="fragment">
     <strong>Take the gradient with respect to \(\mathbf{p}\) and set to zero:</strong><br>
     \[
       \nabla_{\mathbf{p}} \Phi(\mathbf{p}) = -2 \mathbf{G}^\top \mathbf{h}^o + 2 \mathbf{G}^\top \mathbf{G} \mathbf{p}=\mathbf{0}
@@ -508,13 +474,8 @@ $$
       }
     \]
   </li>
-  <li>
+  <li class="fragment">
     <strong>Solve the normal equations and estimate $x_c$, $y_c$, $z_c$ and $b$:</strong><br>
-    \[
-      \boxed{
-      \mathbf{p} = (\mathbf{G}^\top \mathbf{G})^{-1} \mathbf{G}^\top \mathbf{h}^o
-      }
-    \]
   </li>
 </ol>
 
@@ -524,7 +485,7 @@ $$
 
 ===============================================================================
 <h1>Dipole Field Model</h1>
-<p class="text-left">The field $\mathbf{b}$ generated by a dipole $\mathbf{m} = [m_x, m_y, m_z]^T$:</p>
+<p class="text-left">The field $\mathbf{b}$ generated by a dipole $\mathbf{m} = [m_x \ m_y \ m_z]^\top$:</p>
 $$
 \mathbf{b} = 
 \begin{bmatrix}
@@ -580,7 +541,7 @@ m_z
 \]</p>
 
 $$
-\mathbf{b}_z = 
+b_z = 
 \begin{bmatrix}
 b_x \\
 b_y \\
@@ -595,22 +556,13 @@ b_z
 m_x \\
 m_y \\
 m_z
-\end{bmatrix}
+\end{bmatrix}^\top
 =
 \frac{\mu_0}{4\pi} \mathbf{M}_z \mathbf{m}
 $$
 
-<p class="text-left">$$ b_z = \frac{\mu_0}{4\pi} \mathbf{M}_z \mathbf{m} $$</p>
-<p class="text-left">For $N$ observations:</p>
-$$
-A \mathbf{m} = \mathbf{d}
-$$
 
 ===============================================================================
-# Computing the Derivatives
-<ul>
-  <li>Use <strong>second-order central finite differences</strong> for spatial derivatives:</li>
-</ul>
 $$
 \frac{\partial^2}{\partial z \partial x} \frac{1}{r} = \frac{3(z - z_c)(x - x_c)}{r^5}
 $$
@@ -655,21 +607,7 @@ b_{z_N}
 $$\Gamma(\mathbf{m}) = \|\mathbf{d}^{o}-\mathbf{A}\mathbf{m}\|^2=(\mathbf{d}^{o}-\mathbf{A}\mathbf{m})^T(\mathbf{d}^{o}-\mathbf{A}\mathbf{m})$$
 <p class="text-left">Leading to the normal equations:</p>
 $$\mathbf{A}^T\mathbf{A}\mathbf{m} = \mathbf{A}^T\mathbf{d}^{o}$$
-<p class="fragment">Solution gives estimated dipole moment $\mathbf{\hat{m}}$</p>
-
-===============================================================================
-<h1>Converting to Interpretable Parameters</h1>
-<p>The dipole moment vector can be expressed as:</p>
-$$\begin{aligned}
-I &= -\tan^{-1}\frac{m_z}{\sqrt{m_x^2+m_y^2}} \\
-D &= \tan^{-1}\frac{m_y}{m_x} \\
-m &= \sqrt{m_x^2 + m_y^2 + m_z^2}
-\end{aligned}$$
-
-<div class="footnote-center">
-
-[Tauxe et al. (2018)](https://pubs.geoscienceworld.org/seg/geophysics/article-abstract/47/1/31/71448/EULDPH-A-new-technique-for-making-computer?redirectedFrom=fulltext)
-</div>
+<p class="fragment">Solution gives estimated dipole moment $\mathbf{m}$</p>
 
 ===============================================================================
 <!-- .slide: class="slide-transition" -->
@@ -679,7 +617,7 @@ m &= \sqrt{m_x^2 + m_y^2 + m_z^2}
 <h1>Problem with Linear Inversion</h1>
 <p class="fragment text-left">We now have estimatives for position and magnetic moment of the sources</p>
 <p class="fragment text-left">However <strong>interfering sources</strong> distort these estimates</p>
-<h2 class="fragment"><strong>Solution:</strong> Joint non-linear optimization</h2>
+<h2 class="fragment"><strong>Solution:</strong> non-linear optimization</h2>
 
 ===============================================================================
 <h1>Non-Linear Misfit Function</h1>
@@ -688,9 +626,10 @@ m &= \sqrt{m_x^2 + m_y^2 + m_z^2}
     \xi(\mathbf{x}, \mathbf{m}) = \| (\mathbf{d}^o - b) - \mathbf{d}(\mathbf{x}, \mathbf{m}) \|_2^2
     \]
 </div>
-<p >Jointly optimizes position \(\mathbf{x}\) and dipole moment \(\mathbf{m}\)</p>
+<p >Optimizes position \(\mathbf{x}\) and dipole moment \(\mathbf{m}\)</p>
 <ul>
     <li>\(\mathbf{d}^o \): observed data</li>
+    <li>b: background field</li>
     <li>\(\mathbf{d}(\mathbf{x}, \mathbf{m})\): forward model prediction</li>
 </ul>
 
@@ -698,7 +637,6 @@ m &= \sqrt{m_x^2 + m_y^2 + m_z^2}
 <h2>Why Nelder-Mead?</h2>
 <ul>
     <li class="fragment">No need for gradient calculations</li>
-    <li class="fragment">Works with irregular/noisy functions</li>
     <li class="fragment">Simple to implement</li>
     <li class="fragment">Effective for low-dimensional problems (like our 6-parameter dipole problem)</li>
 </ul>
@@ -717,7 +655,49 @@ m &= \sqrt{m_x^2 + m_y^2 + m_z^2}
 <p class="fragment text-left">This step ensures weaker or previously masked sources are detected after removing stronger signals.</p>
 
 ===============================================================================
+<!-- .slide: class="slide-transition" -->
+# Signal Removal
 
+===============================================================================
+
+<h2>Why Not Full-Scale Inversion?</h2>
+<h3>Key Computational Challenges</h3>
+<ul>
+    <li class="fragment">
+        <strong>Problem Size:</strong>
+        $N × 3L$ matrix 
+        <br><small>(<span class="math">N</span> = data points, <span class="math">L</span> = sources)</small>
+    </li>
+    <li class="fragment">
+        <strong>Background Field:</strong>
+        Requires pre-processing → Risk of bias
+    </li>
+    <li class="fragment">
+        <strong>Benchmark Results:</strong>
+        <span class="pros">Windowed data</span> outperforms in speed/accuracy
+    </li>
+</ul>
+
+
+===============================================================================
+<h2>Sequential Subtraction Method</h2>
+<div class="fragment">
+  <p>Workflow</p>
+  <ol>
+    <li class="fragment">Model strongest source (dipole equation)</li>
+    <li class="fragment">Subtract signal from dataset</li>
+    <li class="fragment">Recalculate for next source (strong → weak)</li>
+  </ol>
+</div>
+<div class="fragment">
+  <p>Outcome</p>
+  <ul>
+    <li>↑ Precision</span> in position/direction estimates</li>
+    <li>↑ Runtime</span> but justified by accuracy gains</li>
+  </ul>
+</div>
+
+===============================================================================
 <!-- .slide: data-background-opacity="1" data-background-image="assets/re-detection-methodology.png"  data-background-size="contain" data-background-color="#262626" -->
 
 ===============================================================================

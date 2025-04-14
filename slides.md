@@ -754,6 +754,7 @@ def test_dipole_bz_grid(souza_junior_model):
 
 ===============================================================================
   <h1>Done</h1>
+<div class="text-left">
   <h3>WP1: Initial Software Prototype</h3>
   <ul>
     <li class="fragment"><strong>WP1.1:</strong> GitHub repo + package structure</li>
@@ -762,21 +763,25 @@ def test_dipole_bz_grid(souza_junior_model):
     <li class="fragment"><strong>WP1.4:</strong> Source detection (Souza-Junior et al.)</li>
     <li class="fragment"><strong>WP1.6:</strong> Euler Deconvolution in <em>Harmonica</em></li>
   </ul>
+</div>
 
 ===============================================================================
 <h2>In Progress</h2>
-<h3>WP1: Initial Software Prototype</h3>
-<ul>
-  <li class="fragment"><strong>WP1.5:</strong> Release v0.1 (internal test)</li>
-  <li class="fragment"><strong>WP1.7:</strong> Linear inversion for dipole moments</li>
-  <li class="fragment"><strong>WP1.8:</strong> Release v0.2 with inversion</li>
-</ul>
+<div class=" fragment text-left">
 
-<div class="fragment">
-  <h3>WP2: Non-linear inversion methods</h3>
+  <h3>WP1: Initial Software Prototype</h3>
   <ul>
-    <li><strong>WP2.1:</strong> Study inverse theory background</li>
+    <li class="fragment"><strong>WP1.5:</strong> Release v0.1 (internal test)</li>
+    <li class="fragment"><strong>WP1.7:</strong> Linear inversion for dipole moments</li>
+    <li class="fragment"><strong>WP1.8:</strong> Release v0.2 with inversion</li>
   </ul>
+
+  <div class="fragment">
+    <h3>WP2: Non-linear inversion methods</h3>
+    <ul>
+      <li><strong>WP2.1:</strong> Study inverse theory background</li>
+    </ul>
+  </div>
 </div>
 
 ===============================================================================
@@ -802,12 +807,15 @@ def test_dipole_bz_grid(souza_junior_model):
 ===============================================================================
 <h2>Centre national de la recherche scientifique</h2>
 <h3>International Cooperation | Second Semester 2025</h2>
-<ul>
-  <li class="fragment">Test Magali on new microscope data</li>
-  <li class="fragment">Fill feature gaps + refine tools</li>
-  <li class="fragment">Explore extended use of equivalent sources</li>
-  <li class="fragment">Host local workshop</li>
-</ul>
+<br>
+<div class="text-left">
+  <ul>
+    <li class="fragment">Test Magali on new microscope data</li>
+    <li class="fragment">Fill feature gaps + refine tools</li>
+    <li class="fragment">Explore extended use of equivalent sources</li>
+    <li class="fragment">Host local workshop</li>
+  </ul>
+</div>
 
 ===============================================================================
 <!-- .slide: data-background-opacity="1" data-background-image="assets/grades.png"  data-background-size="contain" data-background-color="#262626" -->

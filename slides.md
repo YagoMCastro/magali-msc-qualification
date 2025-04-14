@@ -689,13 +689,6 @@ $$\mathbf{A}^T\mathbf{A}\mathbf{m} = \mathbf{A}^T\mathbf{d}^{o}$$
     <li class="fragment">Recalculate for next source (strong → weak)</li>
   </ol>
 </div>
-<div class="fragment">
-  <p>Outcome</p>
-  <ul>
-    <li>↑ Precision</span> in position/direction estimates</li>
-    <li>↑ Runtime</span> but justified by accuracy gains</li>
-  </ul>
-</div>
 
 ===============================================================================
 <!-- .slide: data-background-opacity="1" data-background-image="assets/re-detection-methodology.png"  data-background-size="contain" data-background-color="#262626" -->
@@ -717,13 +710,34 @@ $$\mathbf{A}^T\mathbf{A}\mathbf{m} = \mathbf{A}^T\mathbf{d}^{o}$$
 <!-- .slide: data-background-opacity="1" data-background-image="assets/checks.png"  data-background-size="contain" data-background-color="#262626" -->
 
 ===============================================================================
-<!-- .slide: data-background-opacity="1" data-background-image="assets/tests.png"  data-background-size="contain" data-background-color="#262626" -->
+```python
+def test_dipole_bz_grid(souza_junior_model):
+    # Use model fixture from _models.py
+    data = souza_junior_model
+
+    # Test units
+    assert data.x.units == "µm"
+    assert data.y.units == "µm"
+    assert data.units == "nT"
+
+    # Test array sizes
+    assert data.x.size == 1001
+    assert data.y.size == 1001
+    assert data.size == 1002001
+
+    # Test data name
+    assert data.long_name == "vertical magnetic field"
+
+    # Test if data is a DataArray
+    assert isinstance(data.x, xr.DataArray)
+    assert isinstance(data.y, xr.DataArray)
+    assert isinstance(data, xr.DataArray)
+```
 
 ===============================================================================
 <!-- .slide: data-background-opacity="1" data-background-image="assets/documentation.png"  data-background-size="contain" data-background-color="#262626" -->
 
 ===============================================================================
-
 <!-- .slide: data-background-opacity="1" data-background-image="assets/api.png"  data-background-size="contain" data-background-color="#262626" -->
 
 ===============================================================================
@@ -740,58 +754,61 @@ $$\mathbf{A}^T\mathbf{A}\mathbf{m} = \mathbf{A}^T\mathbf{d}^{o}$$
 # Schedule
 
 ===============================================================================
-<h1>WP1: Initial Software Prototype | Months: 1–12</h1>
-<p><strong>Goal:</strong> Develop an initial version of <em>Magali</em> based on Souza-Junior et al. (2023).</p>
-<div class="text-left">
+  <h1>Done</h1>
+  <h3>WP1: Initial Software Prototype</h3>
   <ul>
-    <li><b>WP1.1:</b> GitHub repo + package structure</li>
-    <li><b>WP1.2:</b> Forward modeling of dipoles + synthetic data</li>
-    <li><b>WP1.3:</b> QDM I/O routines + visualization</li>
-    <li><b>WP1.4:</b> Source detection (Souza-Junior et al.)</li>
-    <li><b>WP1.5:</b> Release v0.1 (internal test)</li>
-    <li><b>WP1.6:</b> Euler Deconvolution in <em>Harmonica</em></li>
-    <li><b>WP1.7:</b> Linear inversion for dipole moments</li>
-    <li><b>WP1.8:</b> Release v0.2 with inversion</li>
+    <li class="fragment"><strong>WP1.1:</strong> GitHub repo + package structure</li>
+    <li class="fragment"><strong>WP1.2:</strong> Forward modeling of dipoles + synthetic data</li>
+    <li class="fragment"><strong>WP1.3:</strong> QDM I/O routines + visualization</li>
+    <li class="fragment"><strong>WP1.4:</strong> Source detection (Souza-Junior et al.)</li>
+    <li class="fragment"><strong>WP1.6:</strong> Euler Deconvolution in <em>Harmonica</em></li>
   </ul>
-</div>
 
 ===============================================================================
-<h1>WP2: Convolutional Equivalent Layer | Months:11–16</h1>
-<p class="text-left"><strong>Goal:</strong> Integrate method from Takahashi et al. (2022) for better field reconstruction.</p>
-<p class="text-left"><strong>With:</strong> Dr. Oliveira Jr. & Dr. Reis (PINGA Lab)</p>
-<div class="text-left">
-  <ul>
-    <li><b>WP2.1:</b> Study inverse theory background</li>
-    <li><b>WP2.2:</b> Implement method in <em>Harmonica</em></li>
-    <li><b>WP2.3:</b> Reconstruct <code>Bz</code> from 1 QDM component; compare with FFT</li>
-    <li><b>WP2.4:</b> Extend to multi-component input under noise</li>
-  </ul>
-</div>
-
-===============================================================================
-<h1>WP3: Polish & Disseminate | Months: 17–24</h1>
-<p class="text-left"><strong>Goal:</strong> Finalize and promote <em>Magali</em> through documentation and outreach.</p>
-<div class="text-left">
-  <ul>
-    <li><b>WP3.1:</b> Test with diverse QDM data (incl. CNRS)</li>
-    <li><b>WP3.2:</b> Build docs + tutorials on <a href="https://fatiando.org/magali">fatiando/magali</a></li>
-    <li><b>WP3.3:</b> Host user workshop (EGU, LatinMag, BEPE)</li>
-    <li><b>WP3.4:</b> Release v1.0</li>
-    <li><b>WP3.5:</b> Submit journal article</li>
-  </ul>
-</div>
-
-===============================================================================
-<p><strong>BEPE | CNRS | Jul–Dec 2025:</strong></p>
+<h2>In Progress</h2>
+<h3>WP1: Initial Software Prototype</h3>
 <ul>
-  <li>Test Magali on new microscope data</li>
-  <li>Fill feature gaps + refine tools</li>
-  <li>Explore extended use of eq. sources</li>
-  <li>Host local workshop</li>
+  <li class="fragment"><strong>WP1.5:</strong> Release v0.1 (internal test)</li>
+  <li class="fragment"><strong>WP1.7:</strong> Linear inversion for dipole moments</li>
+  <li class="fragment"><strong>WP1.8:</strong> Release v0.2 with inversion</li>
 </ul>
 
+<div class="fragment">
+  <h3>WP2: Non-linear inversion methods</h3>
+  <ul>
+    <li><strong>WP2.1:</strong> Study inverse theory background</li>
+  </ul>
+</div>
+
 ===============================================================================
-<!-- .slide: data-background-opacity="1" data-background-image="assets/schedule.png"  data-background-size="contain" data-background-color="#262626" -->
+<h2>To Do</h2>
+<div class="fragment text-left">
+  <h3>WP2: Non-linear inversion methods</h3>
+  <ul>
+    <li><strong>WP2.2:</strong> Test and compare multiple non-linear inversion methods</li>
+  </ul>
+</div>
+
+<div class="text-left">
+  <h3 class="fragment">WP3: Polish & Disseminate</h3>
+  <ul>
+    <li class="fragment"><strong>WP3.1:</strong> Test with diverse QDM data (incl. CNRS)</li>
+    <li class="fragment"><strong>WP3.2:</strong> Build docs + tutorials on <a href="https://fatiando.org/magali">fatiando/magali</a></li>
+    <li class="fragment"><strong>WP3.3:</strong> Host user workshop</li>
+    <li class="fragment"><strong>WP3.4:</strong> Release v1.0</li>
+    <li class="fragment"><strong>WP3.5:</strong> Write and submit journal article</li>
+  </ul>
+</div>
+
+===============================================================================
+<h2>Centre national de la recherche scientifique</h2>
+<h3>International Cooperation | Second Semester 2025</h2>
+<ul>
+  <li class="fragment">Test Magali on new microscope data</li>
+  <li class="fragment">Fill feature gaps + refine tools</li>
+  <li class="fragment">Explore extended use of equivalent sources</li>
+  <li class="fragment">Host local workshop</li>
+</ul>
 
 ===============================================================================
 <!-- .slide: data-background-opacity="1" data-background-image="assets/grades.png"  data-background-size="contain" data-background-color="#262626" -->
@@ -799,12 +816,11 @@ $$\mathbf{A}^T\mathbf{A}\mathbf{m} = \mathbf{A}^T\mathbf{d}^{o}$$
 ===============================================================================
 <h1>Extracurricular Activities</h1>
 <ul>
-  <li>Análise de Anomalias Magnéticas na Região de Aconcágua: Perspectivas Magnéticas a Partir de Modelagem Computacional e Técnica de Camada de Fontes Equivalentes | <b>Seminar Presenter | June 12, 2024 | Quinzenal Group Meeting Seminar</b></li>
-  <li>Magali: Modelling and inversion of magnetic microscopy data | <b>Seminar Presenter | September 11, 2024 | IAG Science Day 2024</b></li>
-  <li>Kit de sobrevivência digital para cientistas | <b>Teaching Assistent | February 17 to 21, 2025 | XXVII Geophysics Summer School </b></li>
-  <li><b>Deputy Student Representative | 2025</b></li>
+  <li class="fragment">Análise de Anomalias Magnéticas na Região de Aconcágua: Perspectivas Magnéticas a Partir de Modelagem Computacional e Técnica de Camada de Fontes Equivalentes | <b>Seminar Presenter | June 12, 2024 | Seminário do Grupo de Geodinâmica - IAG</b></li>
+  <li class="fragment">Magali: Modelling and inversion of magnetic microscopy data | <b>Seminar Presenter | September 11, 2024 | IAG Science Day 2024</b></li>
+  <li class="fragment">Kit de sobrevivência digital para cientistas | <b>Teaching Assistent | February 17 to 21, 2025 | XXVII Geophysics Summer School </b></li>
+  <li class="fragment"><b>Vice-representante discente na CCP | 2025</b></li>
 </ul>
-
 
 ===============================================================================
 <!-- .slide: data-background-opacity="0.2" data-background-image="assets/magali-logo.png"  data-background-size="contain" data-background-color="#262626" -->

@@ -57,8 +57,8 @@ Feel free to screenshot/share/reuse this presentation
 ===============================================================================
 # How minerals are magnetized?
 <ul>
-  <li><b>Thermoremanent Magnetization (TRM): </b>igneous rocks record Earth’s magnetic field as they cool below the Curie point</li>
-  <li><b>Depositional Remanent Magnetization (DRM):</b> magnetic particles in sediments align with Earth’s field during deposition in aquatic environments</li>
+  <li class="fragment"><b>Thermoremanent Magnetization (TRM): </b>igneous rocks record Earth’s magnetic field as they cool below the Curie point</li>
+  <li class="fragment"><b>Depositional Remanent Magnetization (DRM):</b> magnetic particles in sediments align with Earth’s field during deposition in aquatic environments</li>
 </ul>
 
 ===============================================================================
@@ -93,14 +93,8 @@ Feel free to screenshot/share/reuse this presentation
 </div>
 
 ===============================================================================
-<div class="r-stretch">
-  <img src="assets/microscope.svg" height=100%>
-</div>
-<div class="footnote-center">
+<!-- .slide: class="slide-title" data-background-opacity="1" data-background-image="assets/qdm.jpg"  data-background-size="contain" -->
 
-[Araujo et al. (2019)](https://doi.org/10.3390/s19071636)
-
-</div>
 
 ===============================================================================
 <!-- .slide: class="slide-title" data-background-opacity="1" data-background-image="assets/microscope-data.svg"  data-background-size="contain" -->

@@ -5,7 +5,6 @@ The reveal.js configuration can be found in index.html
 -------------------------------------------------------------------------------
 -->
 
-
 <!-- .slide: class="slide-title" data-background-opacity="0.3" data-background-image="assets/magali-logo.svg" data-background-color="#000000" data-background-size="contain" -->
 
 <!-- Place the content at the bottom of the slide -->

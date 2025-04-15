@@ -587,7 +587,7 @@ b_{z_2} \\
 b_{z_N}
 \end{bmatrix}}_{\text{Observation vector}}
 \]
-<p class="fragment">$$\mathbf{Am=d^o}$$</p>
+<p class="fragment">$$\mathbf{Am=d}$$</p>
 
 ===============================================================================
 <h1>Least Squares Estimation</h1>

@@ -299,12 +299,15 @@ $$\Delta_xf(x, y, z) ≈ \frac{f(x + \Delta x,y,z) - f(x - \Delta x,y,z)}{2\Delt
 - **Dynamic Range**: Ensures both weak and strong signals are visible.
 
 ===============================================================================
-<!-- .slide: data-background-opacity="1" data-background-image="assets/tga_stretched.png"  data-background-size="contain" data-background-color="#262626" -->
+<div class="row">
+<div class="col"><img src="assets/tga_iso.png" style="width: 80%" ></div>
+<div class="col"><img src="assets/tga_stretched.png" style="width: 100%" ></div>
+</div>
 
 ===============================================================================
 # LoG Blob Detection
 <ul>
-  <li class="fragment text-left"><b>Algorithm:</b> Laplacian of Gaussian (LoG) (Kong et al., 2013)</li>
+  <li class="fragment text-left"><b>Algorithm:</b> Laplacian of Gaussian (LoG)</li>
   <li class="fragment text-left"><b>Purpose:</b> Detect local maxima ("blobs") in rescaled TGA image</li>
   <li class="fragment text-left"><b>Advantages:</b></li>
   <ul>
@@ -376,7 +379,7 @@ b$</p>
 <div class="fragment">
 
 $$
-\underbrace{x_c \partial_x f + y_c \partial_y f + z_c \partial_z f + \eta b}_\text{Predicted} = \underbrace{x \partial_x f + y \partial_y f + z \partial_z f + \eta f}_\text{Observed}
+\underbrace{x_c \partial_x f + y_c \partial_y f + z_c \partial_z f + \eta b}_\text{Paremetric} = \underbrace{x \partial_x f + y \partial_y f + z \partial_z f + \eta f}_\text{Nonparametric}
 $$
 </div>
 <div class="footnote-center">
@@ -535,12 +538,6 @@ m_z
 
 $$
 b_z = 
-\begin{bmatrix}
-b_x \\
-b_y \\
-b_z
-\end{bmatrix}
-=
 \frac{\mu_0}{4\pi}
 \begin{bmatrix}
 \frac{\partial^2}{\partial z \partial x} \frac{1}{r} & \frac{\partial^2}{\partial z \partial y} \frac{1}{r} & \frac{\partial^2}{\partial z \partial z} \frac{1}{r}
@@ -549,9 +546,7 @@ b_z
 m_x \\
 m_y \\
 m_z
-\end{bmatrix}^\top
-=
-\frac{\mu_0}{4\pi} \mathbf{M}_z \mathbf{m}
+\end{bmatrix}^\top 
 $$
 
 
@@ -592,7 +587,7 @@ b_{z_2} \\
 b_{z_N}
 \end{bmatrix}}_{\text{Observation vector}}
 \]
-<p class="fragment">$$\mathbf{Am=b}$$</p>
+<p class="fragment">$$\mathbf{Am=d^o}$$</p>
 
 ===============================================================================
 <h1>Least Squares Estimation</h1>
@@ -635,19 +630,6 @@ $$\mathbf{A}^T\mathbf{A}\mathbf{m} = \mathbf{A}^T\mathbf{d}^{o}$$
 </ul>
 
 ===============================================================================
-<p class="text-left"> <b>Step 1 - Source Detection</b></p>
-<p class="text-left"> <b>Step 2 - Iterative processing (per window)</b></p>
-<ul>
-  <li>(a) <strong>Isolate data</strong> – Select magnetic data inside window</li>
-  <li>(b) <strong>Euler deconvolution</strong> – Estimate source <em>position</em></li>
-  <li>(c) <strong>Linear inversion</strong> – Estimate dipole <em>moment</em> using fixed position</li>
-  <li>(d) <strong>Non-linear inversion</strong> – Refine position & moment via <a href="https://academic.oup.com/comjnl/article-abstract/7/4/308/354237?redirectedFrom=fulltext">Nelder-Mead</a></li>
-  <li>(e) <strong>Signal removal</strong> – Forward model dipole & subtract from full dataset</li>
-</ul>
-<p class="text-left"> <b>Step 3 - Repeat detection on residual data:</b> Apply steps 1 and 2  to the stripped dataset to identify new sources and compute their parameters
-<p class="fragment text-left">This step ensures weaker or previously masked sources are detected after removing stronger signals.</p>
-
-===============================================================================
 <!-- .slide: class="slide-transition" -->
 # Signal Removal
 
@@ -682,6 +664,18 @@ $$\mathbf{A}^T\mathbf{A}\mathbf{m} = \mathbf{A}^T\mathbf{d}^{o}$$
     <li class="fragment">Recalculate for next source (strong → weak)</li>
   </ol>
 </div>
+
+===============================================================================
+<p class="text-left"> <b>Step 1 - Source Detection</b></p>
+<p class="text-left"> <b>Step 2 - Iterative processing (per window)</b></p>
+<ul>
+  <li>(a) <strong>Isolate data</strong> – Select magnetic data inside window</li>
+  <li>(b) <strong>Euler deconvolution</strong> – Estimate source <em>position</em></li>
+  <li>(c) <strong>Linear inversion</strong> – Estimate dipole <em>moment</em> using fixed position</li>
+  <li>(d) <strong>Non-linear inversion</strong> – Refine position & moment via <a href="https://academic.oup.com/comjnl/article-abstract/7/4/308/354237?redirectedFrom=fulltext">Nelder-Mead</a></li>
+  <li>(e) <strong>Signal removal</strong> – Forward model dipole & subtract from full dataset</li>
+</ul>
+<p class="text-left fragment"> <b>Step 3 - Repeat detection on residual data:</b> Apply steps 1 and 2  to the stripped dataset to identify new sources and compute their parameters
 
 ===============================================================================
 <!-- .slide: data-background-opacity="1" data-background-image="assets/re-detection-methodology.png"  data-background-size="contain" data-background-color="#262626" -->

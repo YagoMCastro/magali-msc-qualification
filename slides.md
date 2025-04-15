@@ -639,11 +639,6 @@ $$\mathbf{A}^T\mathbf{A}\mathbf{m} = \mathbf{A}^T\mathbf{d}^{o}$$
 <h3>Key Computational Challenges</h3>
 <ul>
     <li class="fragment">
-        <strong>Problem Size:</strong>
-        $N × 3L$ matrix 
-        <br><small>(<span class="math">N</span> = data points, <span class="math">L</span> = sources)</small>
-    </li>
-    <li class="fragment">
         <strong>Background Field:</strong>
         Requires pre-processing → Risk of bias
     </li>

@@ -93,8 +93,16 @@ Feel free to screenshot/share/reuse this presentation
 </div>
 
 ===============================================================================
-<!-- .slide: class="slide-title" data-background-opacity="1" data-background-image="assets/qdm.jpg"  data-background-size="contain" -->
+<div class="r-stretch">
 
+  <img src="assets/qdm.jpg" height=115%>
+
+</div>
+<br>
+<div class="footnote-left">
+
+[Harvard Paleomagnetics Lab](https://paleomag.fas.harvard.edu/laboratory)
+</div>
 
 ===============================================================================
 <!-- .slide: class="slide-title" data-background-opacity="1" data-background-image="assets/microscope-data.svg"  data-background-size="contain" -->

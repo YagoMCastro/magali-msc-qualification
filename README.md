@@ -2,7 +2,7 @@
 
 **Presenter**: Yago Moreira Castro
 
-**Preview:** [https://yagomcastro.github.io/compgeolab-meeting-nov-2024](https://yagomcastro.github.io/compgeolab-meeting-nov-2024)
+**Preview:** [https://yagomcastro.github.io/magali-msc-qualification](https://yagomcastro.github.io/magali-msc-qualification)
 
 > A template by Leonardo Uieda was used to create this presentation:
 > https://github.com/leouieda/talk-template
